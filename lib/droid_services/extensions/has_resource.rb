@@ -1,3 +1,4 @@
+require 'active_support'
 module DroidServices::Extensions
   module HasResource
     extend ActiveSupport::Concern

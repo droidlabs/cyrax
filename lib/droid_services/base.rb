@@ -1,5 +1,6 @@
+require 'has_active_logger'
 class DroidServices::Base
-  include DroidServices::Extensions::HasLogger
+  include HasActiveLogger::Mixin
   include DroidServices::Extensions::HasResponse
 
   attr_accessor :params, :accessor

@@ -1,5 +1,4 @@
 require "droid_services/version"
-require "droid_services/extensions/has_logger.rb"
 require "droid_services/extensions/has_resource.rb"
 require "droid_services/extensions/has_response.rb"
 require "droid_services/extensions/has_callbacks.rb"
