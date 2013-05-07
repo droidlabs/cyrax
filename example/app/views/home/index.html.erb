@@ -1,0 +1,10 @@
+<h3>Home</h3>
+<table class="table">
+  <% @products.each do |product| %>
+    <tr>
+      <td><%= product.vendor %></td>
+      <td><%= product.model %></td>
+      <td><%= number_to_currency(product.price) %></td>
+    </tr>
+  <% end %>
+</table>
