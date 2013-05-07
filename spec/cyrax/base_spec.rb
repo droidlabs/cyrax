@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-module DroidServices
+module Cyrax
   describe Base do
     describe '#new' do
-      subject { DroidServices::Base.new({as: :john, params: {foo: 'bar'}})}
+      subject { Cyrax::Base.new({as: :john, params: {foo: 'bar'}})}
       its(:accessor) { should eq(:john) }
       its(:params) { should eq({foo: 'bar'}) }
     end

@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 class Foo; end
-module DroidServices
+module Cyrax
   describe BaseResource do
     describe 'it should behave like resource' do
       context 'class methods' do
-        subject { DroidServices::BaseResource }
+        subject { Cyrax::BaseResource }
         it{ should respond_to(:new) }
       end
       context 'instance methods' do
-        subject { DroidServices::BaseResource.new }
+        subject { Cyrax::BaseResource.new }
         it{ should respond_to(:accessor) }
         it{ should respond_to(:params) }
         it{ should respond_to(:resource_name) }
@@ -29,7 +29,7 @@ module DroidServices
       end
     end
 
-    subject { DroidServices::BaseResource.new }
+    subject { Cyrax::BaseResource.new }
     let(:resource) { mock.as_null_object }
     let(:collection) { mock }
     before do

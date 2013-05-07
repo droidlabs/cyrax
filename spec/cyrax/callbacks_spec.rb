@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-module DroidServices
+module Cyrax
   describe Callbacks do
-    subject { DroidServices::Callbacks.new(mock) }
+    subject { Cyrax::Callbacks.new(mock) }
 
     it { should respond_to(:before_create) }
     it { should respond_to(:after_create) }

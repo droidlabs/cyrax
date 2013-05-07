@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-module DroidServices
-  describe DroidServices::Extensions::HasResponse do
-    include DroidServices::Extensions::HasResponse
+module Cyrax
+  describe Cyrax::Extensions::HasResponse do
+    include Cyrax::Extensions::HasResponse
 
     subject { self }
 
@@ -52,18 +52,18 @@ module DroidServices
 
     describe '#respond_with' do
       before { subject.stub!(:resource_name).and_return(:foo) }
-      it 'calls DroidServices::Response' do
-        DroidServices::Response.should_receive(:new).with(:foo, 'bar').and_return(mock.as_null_object)
+      it 'calls Cyrax::Response' do
+        Cyrax::Response.should_receive(:new).with(:foo, 'bar').and_return(mock.as_null_object)
         subject.respond_with('bar')
       end
 
-      it 'should return DroidServices::Response instance' do
-        subject.respond_with('bar').should be_a_kind_of(DroidServices::Response)
+      it 'should return Cyrax::Response instance' do
+        subject.respond_with('bar').should be_a_kind_of(Cyrax::Response)
       end
 
       it 'should assign message, errors and additional assignments to response object' do
         response = mock
-        DroidServices::Response.should_receive(:new).and_return(response)
+        Cyrax::Response.should_receive(:new).and_return(response)
         response.should_receive(:message=)
         response.should_receive(:errors=)
         response.should_receive(:assignments=)

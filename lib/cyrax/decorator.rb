@@ -1,4 +1,4 @@
-class DroidServices::Decorator
+class Cyrax::Decorator
   attr_accessor :resource
 
   def initialize(resource)

@@ -3,4 +3,4 @@ if ENV['COVERAGE']
   SimpleCov.start
 end
 
-require 'droid_services'
+require 'cyrax'

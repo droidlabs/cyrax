@@ -11,9 +11,9 @@ class Foo;
   end
 end
 
-module DroidServices
-  describe DroidServices::Extensions::HasDecorator do
-    include DroidServices::Extensions::HasDecorator
+module Cyrax
+  describe Cyrax::Extensions::HasDecorator do
+    include Cyrax::Extensions::HasDecorator
 
     describe 'class attributes' do
       subject { self.class }

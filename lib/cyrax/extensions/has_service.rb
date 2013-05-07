@@ -1,4 +1,4 @@
-module DroidServices::Extensions
+module Cyrax::Extensions
   module HasService
     extend ActiveSupport::Concern
 

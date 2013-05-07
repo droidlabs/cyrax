@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-module DroidServices
-  describe DroidServices::Extensions::HasCallbacks do
-    include DroidServices::Extensions::HasCallbacks
+module Cyrax
+  describe Cyrax::Extensions::HasCallbacks do
+    include Cyrax::Extensions::HasCallbacks
 
     describe '#invoke_callback' do
       context 'when callback handler class is not defined' do

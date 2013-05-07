@@ -1,4 +1,4 @@
-module DroidServices::Extensions
+module Cyrax::Extensions
   module HasDecorator
     extend ActiveSupport::Concern
 

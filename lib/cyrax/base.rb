@@ -1,7 +1,7 @@
 require 'has_active_logger'
-class DroidServices::Base
+class Cyrax::Base
   include HasActiveLogger::Mixin
-  include DroidServices::Extensions::HasResponse
+  include Cyrax::Extensions::HasResponse
 
   attr_accessor :params, :accessor
 

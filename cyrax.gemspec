@@ -1,11 +1,11 @@
 # coding: utf-8
 $:.push File.expand_path("../lib", __FILE__)
 
-require 'droid_services/version'
+require 'cyrax/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "droid_services"
-  spec.version       = DroidServices::VERSION
+  spec.name          = "cyrax"
+  spec.version       = Cyrax::VERSION
   spec.authors       = ["Droidlabs"]
   spec.description   = "Droid Services"
   spec.summary       = "Droid Services"

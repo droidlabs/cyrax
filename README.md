@@ -1,12 +1,14 @@
-# DroidServices
+# Cyrax
+![Cyrax](http://images2.wikia.nocookie.net/__cb20121118042055/mk/images/thumb/4/44/CyraxMK9Render.png/322px-CyraxMK9Render.png)
+> Safeties disabled; combat mode engaged.
 
-TODO: Write a gem description
+Cyrax is microframework to build layered architecture, one of the core concepts of Domain Driven Design
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'droid_services'
+    gem 'cyrax'
 
 And then execute:
 
@@ -14,11 +16,11 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install droid_services
+    $ gem install cyrax
 
 ## Usage
 
-TODO: Write usage instructions here
+Look at `example` folder.
 
 ## Contributing
 

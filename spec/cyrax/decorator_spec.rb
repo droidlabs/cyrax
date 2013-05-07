@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-module DroidServices
+module Cyrax
   describe Decorator do
     let(:decorable) { mock(foo:'bar') }
-    subject { DroidServices::Decorator.new(decorable) }
+    subject { Cyrax::Decorator.new(decorable) }
 
     its(:resource) { should eq(decorable) }
 

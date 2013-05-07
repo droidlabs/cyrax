@@ -1,7 +1,7 @@
 require 'active_support/core_ext/object'
 require 'active_support/core_ext/class'
 
-module DroidServices::Extensions
+module Cyrax::Extensions
   module HasCallbacks
     extend ActiveSupport::Concern
 

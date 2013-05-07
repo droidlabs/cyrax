@@ -1,19 +1,19 @@
 require 'spec_helper'
 
-module DroidServices
+module Cyrax
   describe Response do
-    subject { DroidServices::Response.new('some_resource', 'some_result')}
+    subject { Cyrax::Response.new('some_resource', 'some_result')}
 
     describe '#with_message' do
       before { subject.with_message('some message') }
-      it { should be_kind_of(DroidServices::Response) }
+      it { should be_kind_of(Cyrax::Response) }
       its(:message) { should be }
       its(:message) { should eq('some message') }
     end
 
     describe '#with_errors' do
       before { subject.with_errors(['some', 'errors']) }
-      it { should be_kind_of(DroidServices::Response) }
+      it { should be_kind_of(Cyrax::Response) }
       its(:errors) { should be }
       its(:errors) { should eq(['some', 'errors']) }
     end

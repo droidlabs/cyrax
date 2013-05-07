@@ -1,4 +1,4 @@
-module DroidServices::Extensions
+module Cyrax::Extensions
   module HasResponse
     extend ActiveSupport::Concern
 
@@ -32,7 +32,7 @@ module DroidServices::Extensions
     def respond_with(resource, custom_resource_name=nil)
       name = custom_resource_name||resource_name
       result = respond_to?(:decorator_class) ? decorator_class.new(resource) : resource
-      response = DroidServices::Response.new(name, result)
+      response = Cyrax::Response.new(name, result)
       response.message = @_message
       response.errors = @_errors
       response.assignments = @_assignments

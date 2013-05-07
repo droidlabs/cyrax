@@ -1,4 +1,4 @@
-class DroidServices::Callbacks
+class Cyrax::Callbacks
   attr_accessor :resource
 
   def initialize(resource)

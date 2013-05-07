@@ -1,4 +1,4 @@
-class DroidServices::Response
+class Cyrax::Response
   attr_accessor :message, :errors, :assignments, :result, :resource_name
 
   def initialize(resource_name, result)

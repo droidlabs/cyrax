@@ -3,9 +3,9 @@ require 'spec_helper'
 class Bar; end
 class Foo; end
 
-module DroidServices
-  describe DroidServices::Extensions::HasResource do
-    include DroidServices::Extensions::HasResource
+module Cyrax
+  describe Cyrax::Extensions::HasResource do
+    include Cyrax::Extensions::HasResource
 
     describe 'class attributes' do
       subject { self.class }
