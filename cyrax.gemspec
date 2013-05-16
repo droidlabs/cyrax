@@ -7,8 +7,8 @@ Gem::Specification.new do |spec|
   spec.name          = "cyrax"
   spec.version       = Cyrax::VERSION
   spec.authors       = ["Droidlabs"]
-  spec.description   = "Droid Services"
-  spec.summary       = "Droid Services"
+  spec.description   = "Small library for adding service layer to Rails projects"
+  spec.summary       = "Small library for adding service layer to Rails projects"
   spec.license       = "MIT"
 
   spec.files = Dir["lib/**/*"] + ["LICENSE.txt", "Rakefile", "README.md"]
