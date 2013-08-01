@@ -31,7 +31,7 @@ module Cyrax
 
     subject { Cyrax::BaseResource.new }
     let(:resource) { mock.as_null_object }
-    let(:collection) { mock }
+    let(:collection) { [mock] }
     before do
       subject.stub!(:params).and_return({id:123})
       subject.stub!(:find_resource).and_return(resource)

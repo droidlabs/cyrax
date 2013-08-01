@@ -13,11 +13,7 @@ module Cyrax::Extensions
     end
 
     def decorated_collection
-      if decorable?
-        build_decorated_collection
-      else
-        build_collection
-      end
+      decorable? ? build_decorated_collection : wrapped_collection
     end
 
     private
@@ -30,7 +26,7 @@ module Cyrax::Extensions
       self.class.decorator_class_name.to_s.classify.constantize
     end
 
-    def prepare_collection_for_decorate
+    def wrapped_collection
       collection = build_collection
 
       if collection.kind_of?(Array)
@@ -43,7 +39,7 @@ module Cyrax::Extensions
     end
 
     def build_decorated_collection
-      prepare_collection_for_decorate.map{|i| decorator_class.new(i)}
+      wrapped_collection.map{|i| decorator_class.new(i)}
     end
   end
 end

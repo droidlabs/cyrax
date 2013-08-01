@@ -69,7 +69,7 @@ module Cyrax
       describe '#build_decorated_collection' do
         before do
           self.class.decorator(:foo)
-          subject.stub!(:prepare_collection_for_decorate).and_return([:bar])
+          subject.stub!(:wrapped_collection).and_return([:bar])
         end
 
         it 'returns array of decorator instances' do
@@ -78,7 +78,7 @@ module Cyrax
       end
 
       describe '#prepare_collection_for_decorate' do
-        subject { self.send(:prepare_collection_for_decorate) }
+        subject { self.send(:wrapped_collection) }
 
         context 'when #build_collection returns array' do
           before { self.stub!(:build_collection).and_return([:bar]) }
