@@ -47,6 +47,15 @@ module Cyrax::Extensions
     end
 
     module ClassMethods
+      def accessible_attributes(*attrs)
+        if attrs.blank?
+          @accessible_attributes || []
+        else
+          @accessible_attributes ||= []
+          @accessible_attributes += attrs
+        end
+      end
+
       def resource(name, options = {})
         self.resource_name = name.to_s
         self.resource_class_name = options[:class_name]
@@ -55,7 +64,11 @@ module Cyrax::Extensions
 
     private
       def dirty_resource_attributes
-        params[resource_name] || {}
+        if params.respond_to?(:require)
+          params.require(resource_name)
+        else
+          params[resource_name] || {}
+        end
       end
 
       def default_resource_attributes
@@ -63,7 +76,17 @@ module Cyrax::Extensions
       end
 
       def filter_attributes(attributes)
-        attributes
+        if attributes.respond_to?(:permit)
+          attributes.permit(self.class.accessible_attributes)
+        else
+          if !Cyrax.strong_parameters && self.class.accessible_attributes.blank?
+            attributes
+          else
+            attributes.select do |key, value|
+              self.class.accessible_attributes.include?(key.to_sym)
+            end
+          end
+        end
       end
   end
 end

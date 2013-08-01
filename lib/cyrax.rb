@@ -11,4 +11,6 @@ require "cyrax/callbacks.rb"
 require "cyrax/decorator.rb"
 
 module Cyrax
+  mattr_accessor :strong_parameters
+  @@strong_parameters = false
 end

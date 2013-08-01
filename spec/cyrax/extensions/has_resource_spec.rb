@@ -131,6 +131,10 @@ module Cyrax
         it 'should return supplied attributes by default' do
           subject.send(:filter_attributes, {foo: 'bar'}).should eq({foo: 'bar'})
         end
+        it 'should return blank attributes by default for strong_paramters=true' do
+          Cyrax.strong_parameters = true
+          subject.send(:filter_attributes, {foo: 'bar'}).should eq({})
+        end
       end
     end
 
