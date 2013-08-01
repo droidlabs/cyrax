@@ -1,5 +1,11 @@
 require 'spec_helper'
 
+class StrongParameters < Hash
+  def permit(attrs)
+    self.slice(*attrs)
+  end
+end
+
 class Bar; end
 class Foo; end
 
@@ -133,10 +139,10 @@ module Cyrax
         end
         it 'should return blank attributes by default for strong_paramters=true' do
           Cyrax.strong_parameters = true
-          subject.send(:filter_attributes, {foo: 'bar'}).should eq({})
+          params =  StrongParameters.new(foo: 'bar')
+          subject.send(:filter_attributes, params).should eq({})
         end
       end
     end
-
   end
 end

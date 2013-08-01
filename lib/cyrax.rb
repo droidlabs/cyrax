@@ -11,6 +11,13 @@ require "cyrax/callbacks.rb"
 require "cyrax/decorator.rb"
 
 module Cyrax
-  mattr_accessor :strong_parameters
   @@strong_parameters = false
+
+  def self.strong_parameters
+    @@strong_parameters
+  end
+
+  def self.strong_parameters=(value)
+    @@strong_parameters = value
+  end
 end

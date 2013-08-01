@@ -64,7 +64,7 @@ module Cyrax::Extensions
 
     private
       def dirty_resource_attributes
-        if params.respond_to?(:require)
+        if Cyrax.strong_parameters
           params.require(resource_name)
         else
           params[resource_name] || {}
@@ -76,16 +76,12 @@ module Cyrax::Extensions
       end
 
       def filter_attributes(attributes)
-        if attributes.respond_to?(:permit)
+        if Cyrax.strong_parameters
           attributes.permit(self.class.accessible_attributes)
+        elsif self.class.accessible_attributes.blank?
+          attributes
         else
-          if !Cyrax.strong_parameters && self.class.accessible_attributes.blank?
-            attributes
-          else
-            attributes.select do |key, value|
-              self.class.accessible_attributes.include?(key.to_sym)
-            end
-          end
+          attributes.slice(*self.class.accessible_attributes)
         end
       end
   end
