@@ -31,7 +31,7 @@ module Cyrax::Extensions
 
     def respond_with(resource, custom_resource_name=nil)
       name = custom_resource_name||resource_name
-      result = (respond_to?(:decorable?) && decorable?) ? decorator_class.new(resource) : resource
+      result = decorable? ? decorator_class.new(resource) : resource
       response = Cyrax::Response.new(name, result)
       response.message = @_message
       response.errors = @_errors
