@@ -5,6 +5,9 @@ module Cyrax
     include Cyrax::Extensions::HasResponse
 
     subject { self }
+    before do
+      subject.stub!(:decorable?).and_return(false)
+    end
 
     describe '#set_message' do
       it 'should set message' do
