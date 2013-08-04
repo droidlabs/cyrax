@@ -6,7 +6,7 @@ class Cyrax::Response
     @result = result
     @message = nil
     @errors = []
-    @assignments = []
+    @assignments = {}
   end
 
   def with_errors(errors)
