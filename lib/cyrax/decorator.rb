@@ -9,6 +9,14 @@ class Cyrax::Decorator
     resource
   end
 
+  def to_param
+    resource.to_param
+  end
+
+  def to_partial_path
+    resource.to_partial_path
+  end
+
   def method_missing(method, *args, &block)
     return super unless resource.respond_to?(method)
 

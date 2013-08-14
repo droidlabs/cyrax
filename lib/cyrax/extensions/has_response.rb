@@ -29,9 +29,10 @@ module Cyrax::Extensions
       @_message = message
     end
 
-    def respond_with(resource, custom_resource_name=nil)
-      name = custom_resource_name||resource_name
-      result = decorable? ? decorator_class.new(resource) : resource
+    def respond_with(resource, options = {})
+      name = options[:name] || resource_name
+      should_decorate = options[:decorate].nil? || options[:decorate]
+      result = decorable? && should_decorate ? decorator_class.new(resource) : resource
       response = Cyrax::Response.new(name, result)
       response.message = @_message
       response.errors = @_errors
