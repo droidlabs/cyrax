@@ -7,8 +7,9 @@ module Cyrax::Extensions
       @_errors << error
     end
 
-    def assign_resource(resource_name, resource)
+    def assign_resource(resource_name, resource, options = {})
       @_assignments ||= {}
+      resource = options[:decorator].new(resource) if options[:decorator]
       @_assignments[resource_name.to_sym] = resource
     end
 
