@@ -1,4 +1,9 @@
+require 'active_model'
 class Cyrax::Decorator
+  include ActiveModel::Serialization
+  include ActiveModel::Serializers::JSON
+  include ActiveModel::Serializers::Xml
+
   attr_accessor :resource
 
   def initialize(resource)

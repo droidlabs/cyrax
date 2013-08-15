@@ -15,6 +15,7 @@ Gem::Specification.new do |spec|
   spec.test_files = Dir["spec/**/*"]
 
   spec.add_dependency "activesupport"
+  spec.add_dependency "activemodel"
   spec.add_dependency "has_active_logger"
 
   spec.add_development_dependency "rspec"
