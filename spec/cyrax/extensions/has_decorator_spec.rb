@@ -47,56 +47,6 @@ module Cyrax
           its(:decorable?) { should be_false }
         end
       end
-
-      describe '#decorated_collection' do
-        context 'when `decorable?`' do
-          before { subject.stub!(:decorable?).and_return(true) }
-          it 'should return decorated result' do
-            subject.should_receive(:build_decorated_collection)
-            subject.decorated_collection
-          end
-        end
-        context 'when not `decorable?`' do
-          before { subject.stub!(:decorable?).and_return(false) }
-          it 'should return raw result' do
-            subject.should_not_receive(:build_decorated_collection)
-            subject.should_receive(:build_collection)
-            subject.decorated_collection
-          end
-        end
-      end
-
-      describe '#build_decorated_collection' do
-        before do
-          self.class.decorator(:foo)
-          subject.stub!(:wrapped_collection).and_return([:bar])
-        end
-
-        it 'returns array of decorator instances' do
-          subject.send(:build_decorated_collection).should eq([Foo.new(:bar)])
-        end
-      end
-
-      describe '#prepare_collection_for_decorate' do
-        subject { self.send(:wrapped_collection) }
-
-        context 'when #build_collection returns array' do
-          before { self.stub!(:build_collection).and_return([:bar]) }
-          it { should eq([:bar]) }
-        end
-
-        context 'when #build_collection returns any object except array' do
-          before { self.stub!(:build_collection).and_return(:bar) }
-          it { should eq([:bar]) }
-        end
-
-        context 'when #build_collection returns any object which responds to #all method' do
-          let(:obj) { mock(:all => [:bar] ) }
-          before { self.stub!(:build_collection).and_return(obj) }
-
-          it { should eq([:bar]) }
-        end
-      end
     end
   end
 end

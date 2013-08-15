@@ -74,6 +74,27 @@ module Cyrax
         end
       end
 
+      describe '#wrapped_collection' do
+        subject { self.send(:wrapped_collection) }
+
+        context 'when #build_collection returns array' do
+          before { self.stub!(:build_collection).and_return([:bar]) }
+          it { should eq([:bar]) }
+        end
+
+        context 'when #build_collection returns any object except array' do
+          before { self.stub!(:build_collection).and_return(:bar) }
+          it { should eq([:bar]) }
+        end
+
+        context 'when #build_collection returns any object which responds to #all method' do
+          let(:obj) { mock(:all => [:bar] ) }
+          before { self.stub!(:build_collection).and_return(obj) }
+
+          it { should eq([:bar]) }
+        end
+      end
+
       describe '#build_resource' do
         context 'when id is nil' do
           let(:resource_scope) { mock }

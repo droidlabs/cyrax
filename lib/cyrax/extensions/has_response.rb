@@ -8,8 +8,8 @@ module Cyrax::Extensions
     end
 
     def assign_resource(resource_name, resource, options = {})
+      resource = options[:decorator].decorate(resource) if options[:decorator]
       @_assignments ||= {}
-      resource = options[:decorator].new(resource) if options[:decorator]
       @_assignments[resource_name.to_sym] = resource
     end
 
@@ -33,7 +33,7 @@ module Cyrax::Extensions
     def respond_with(resource, options = {})
       name = options[:name] || resource_name
       should_decorate = options[:decorate].nil? || options[:decorate]
-      result = decorable? && should_decorate ? decorator_class.new(resource) : resource
+      result = decorable? && should_decorate ? decorator_class.decorate(resource) : resource
       response = Cyrax::Response.new(name, result)
       response.message = @_message
       response.errors = @_errors

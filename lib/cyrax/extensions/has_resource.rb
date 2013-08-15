@@ -46,6 +46,18 @@ module Cyrax::Extensions
       resource_scope.find(id)
     end
 
+    def wrapped_collection
+      collection = build_collection
+
+      if collection.kind_of?(Array)
+        return collection
+      elsif collection.respond_to?(:all)
+        return collection.all
+      else
+        return Array.wrap(collection)
+      end
+    end
+
     module ClassMethods
       def accessible_attributes(*attrs)
         if attrs.blank?

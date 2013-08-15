@@ -3,7 +3,7 @@ module Cyrax::Extensions
     extend ActiveSupport::Concern
 
     def collection
-      respond_with decorated_collection, name: collection_name
+      respond_with wrapped_collection, name: collection_name
     end
 
     def build

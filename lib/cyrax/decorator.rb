@@ -22,4 +22,21 @@ class Cyrax::Decorator
 
     resource.send(method, *args, &block)
   end
+
+  class << self
+    def fetch(resource)
+      resource.respond_to?(:all) ? resource.all : resource
+    end
+
+    def decorate(resource)
+      resource = fetch(resource)
+      if resource.is_a?(Array)
+        resource.map do |item|
+          self.new(item)
+        end
+      else
+        self.new(resource)
+      end
+    end
+  end
 end
