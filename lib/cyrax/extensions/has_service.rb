@@ -5,6 +5,7 @@ module Cyrax::Extensions
     def collection
       respond_with wrapped_collection, name: collection_name
     end
+    alias_method :read_all, :collection
 
     def build
       respond_with build_resource(nil)

@@ -30,7 +30,13 @@ class Cyrax::Decorator
 
   class << self
     def fetch(resource)
-      resource.respond_to?(:all) ? resource.all : resource
+      if resource.is_a?(ActiveRecord::Relation)
+        resource.to_a
+      elsif resource.respond_to?(:all)
+        resource.all
+      else
+        resource
+      end
     end
 
     def decorate(resource)
