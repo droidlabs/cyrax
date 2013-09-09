@@ -6,8 +6,10 @@ require "cyrax/extensions/has_service.rb"
 require "cyrax/extensions/has_decorator.rb"
 require "cyrax/base.rb"
 require "cyrax/base_resource.rb"
+require "cyrax/base_presenter.rb"
 require "cyrax/response.rb"
 require "cyrax/callbacks.rb"
+require "cyrax/collection_decorator.rb"
 require "cyrax/decorator.rb"
 
 module Cyrax

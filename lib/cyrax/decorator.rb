@@ -24,30 +24,14 @@ class Cyrax::Decorator
 
   def method_missing(method, *args, &block)
     return super unless resource.respond_to?(method)
-
     resource.send(method, *args, &block)
   end
 
   class << self
-    def fetch(resource)
-      if resource.is_a?(ActiveRecord::Relation)
-        resource.to_a
-      elsif resource.respond_to?(:all)
-        resource.all
-      else
-        resource
-      end
-    end
+    alias_method :decorate, :new
 
-    def decorate(resource)
-      resource = fetch(resource)
-      if resource.is_a?(Array)
-        resource.map do |item|
-          self.new(item)
-        end
-      else
-        self.new(resource)
-      end
+    def decorate_collection(resource)
+      Cyrax::CollectionDecorator.decorate(resource, decorator_class: self)
     end
   end
 end

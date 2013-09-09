@@ -41,7 +41,7 @@ module Cyrax
     describe '#collection' do
       it 'responds with decorated collection' do
         subject.should_receive(:build_collection).and_return(collection)
-        subject.should_receive(:respond_with).with(collection, name: 'foos')
+        subject.should_receive(:respond_with).with(collection, name: 'foos', present: :collection)
         subject.collection
       end
     end

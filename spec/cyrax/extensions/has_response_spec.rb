@@ -7,6 +7,7 @@ module Cyrax
     subject { self }
     before do
       subject.stub!(:decorable?).and_return(false)
+      subject.stub!(:decorator_class).and_return(nil)
     end
 
     describe '#set_message' do

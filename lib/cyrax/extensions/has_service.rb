@@ -3,7 +3,7 @@ module Cyrax::Extensions
     extend ActiveSupport::Concern
 
     def collection
-      respond_with wrapped_collection, name: collection_name
+      respond_with build_collection, name: collection_name, present: :collection
     end
     alias_method :read_all, :collection
 

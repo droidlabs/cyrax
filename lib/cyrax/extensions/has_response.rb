@@ -32,8 +32,8 @@ module Cyrax::Extensions
 
     def respond_with(resource, options = {})
       name = options[:name] || resource_name
-      should_decorate = options[:decorate].nil? || options[:decorate]
-      result = decorable? && should_decorate ? decorator_class.decorate(resource) : resource
+      presenter_options = options.merge(decorable: decorable?, decorator_class: decorator_class)
+      result = Cyrax::BasePresenter.present(resource, presenter_options)
       response = Cyrax::Response.new(name, result)
       response.message = @_message
       response.errors = @_errors
