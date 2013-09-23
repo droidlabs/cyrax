@@ -6,6 +6,7 @@ module Cyrax::Extensions
     extend ActiveSupport::Concern
 
     included do
+      register_extension :has_callbacks
       class_attribute :resource_callbacks_handler_class
     end
 

@@ -3,12 +3,13 @@ module Cyrax::Extensions
     extend ActiveSupport::Concern
 
     included do
+      register_extension :has_decorator
       class_attribute :decorator_class_name
     end
 
     module ClassMethods
       def decorator(name)
-        self.decorator_class_name = name.to_s
+        self.decorator_class_name = name ? name.to_s : nil
       end
     end
 

@@ -10,11 +10,9 @@ class Cyrax::BasePresenter
   end
 
   class << self
-
     def present(object, options = {})
       self.new.present(object, options)
     end
-
   end
 
   private

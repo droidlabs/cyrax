@@ -4,6 +4,7 @@ module Cyrax::Extensions
     extend ActiveSupport::Concern
 
     included do
+      register_extension :has_resource
       class_attribute :resource_name
       class_attribute :resource_class_name
     end
@@ -46,16 +47,8 @@ module Cyrax::Extensions
       resource_scope.find(id)
     end
 
-    def wrapped_collection
-      collection = build_collection
-
-      if collection.kind_of?(Array)
-        return collection
-      elsif collection.respond_to?(:all)
-        return collection.all
-      else
-        return Array.wrap(collection)
-      end
+    def response_name
+      resource_name
     end
 
     module ClassMethods

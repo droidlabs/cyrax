@@ -10,19 +10,21 @@ class Bar; end
 class Foo; end
 
 module Cyrax
-  describe Cyrax::Extensions::HasResource do
+  class BaseWithResource < Cyrax::Base
     include Cyrax::Extensions::HasResource
+  end
+
+  describe Cyrax::Extensions::HasResource do
+    subject { BaseWithResource.new }
 
     describe 'class attributes' do
-      subject { self.class }
-      it { should respond_to(:resource_name) }
-      it { should respond_to(:resource_class_name) }
+      its(:class) { should respond_to(:resource_name) }
+      its(:class) { should respond_to(:resource_class_name) }
     end
 
     describe 'class methods' do
       describe '#resource' do
-        before { self.class.resource(:foo, class_name:'bar', name:'bazz') }
-        subject { self }
+        before { subject.class.resource(:foo, class_name:'bar', name:'bazz') }
 
         its(:resource_name) { should eq('foo') }
         its(:resource_class_name) { should eq('bar') }
@@ -30,26 +32,25 @@ module Cyrax
     end
 
     describe 'instance methods' do
-      subject { self }
 
       describe '#resource_name' do
-        before { self.class.resource(:foo) }
+        before { subject.class.resource(:foo) }
         its(:resource_name) { should eq('foo') }
       end
 
       describe '#collection_name' do
-        before { self.class.resource(:foo) }
+        before { subject.class.resource(:foo) }
         its(:collection_name) { should eq('foos') }
       end
 
       describe '#resource_class' do
         context 'when `class_name` option is supplied' do
-          before { self.class.resource(:foo, class_name:'Bar') }
+          before { subject.class.resource(:foo, class_name:'Bar') }
           its(:resource_class) { should eq(Bar) }
         end
 
         context 'when `class_name` option is omited' do
-          before { self.class.resource(:foo) }
+          before { subject.class.resource(:foo) }
           its(:resource_class) { should eq(Foo) }
         end
       end
@@ -71,27 +72,6 @@ module Cyrax
           allow_message_expectations_on_nil
           resource_scope.should_receive(:find).with(123)
           subject.find_resource(123)
-        end
-      end
-
-      describe '#wrapped_collection' do
-        subject { self.send(:wrapped_collection) }
-
-        context 'when #build_collection returns array' do
-          before { self.stub!(:build_collection).and_return([:bar]) }
-          it { should eq([:bar]) }
-        end
-
-        context 'when #build_collection returns any object except array' do
-          before { self.stub!(:build_collection).and_return(:bar) }
-          it { should eq([:bar]) }
-        end
-
-        context 'when #build_collection returns any object which responds to #all method' do
-          let(:obj) { mock(:all => [:bar] ) }
-          before { self.stub!(:build_collection).and_return(obj) }
-
-          it { should eq([:bar]) }
         end
       end
 
@@ -131,7 +111,6 @@ module Cyrax
     end
 
     describe 'private methods' do
-      subject { self }
       describe '#dirty_resource_attributes' do
         context 'when params are present' do
           it 'should return from params by resource_name' do

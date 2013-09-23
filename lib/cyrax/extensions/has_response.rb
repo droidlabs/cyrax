@@ -30,11 +30,17 @@ module Cyrax::Extensions
       @_message = message
     end
 
-    def respond_with(resource, options = {})
-      name = options[:name] || resource_name
-      presenter_options = options.merge(decorable: decorable?, decorator_class: decorator_class)
-      result = Cyrax::BasePresenter.present(resource, presenter_options)
-      response = Cyrax::Response.new(name, result)
+    def response_name
+      self.class.name.demodulize.underscore
+    end
+
+    def respond_with(result, options = {})
+      name = options[:name] || response_name
+      if has_extension?(:has_decorator)
+        options.merge!(decorable: decorable?, decorator_class: decorator_class)
+        result = Cyrax::BasePresenter.present(result, options)
+      end
+      response = result.is_a?(Cyrax::Response) ? result : Cyrax::Response.new(name, result)
       response.message = @_message
       response.errors = @_errors
       response.assignments = @_assignments

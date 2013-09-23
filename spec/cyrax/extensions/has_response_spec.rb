@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 module Cyrax
-  describe Cyrax::Extensions::HasResponse do
+  class BaseWithResponse < Cyrax::Base
     include Cyrax::Extensions::HasResponse
+  end
 
-    subject { self }
+  describe Cyrax::Extensions::HasResponse do
+    subject { BaseWithResponse.new }
     before do
       subject.stub!(:decorable?).and_return(false)
       subject.stub!(:decorator_class).and_return(nil)
@@ -55,7 +57,7 @@ module Cyrax
     end
 
     describe '#respond_with' do
-      before { subject.stub!(:resource_name).and_return(:foo) }
+      before { subject.stub!(:response_name).and_return(:foo) }
       it 'calls Cyrax::Response' do
         Cyrax::Response.should_receive(:new).with(:foo, 'bar').and_return(mock.as_null_object)
         subject.respond_with('bar')
