@@ -2,10 +2,6 @@ module Cyrax::Extensions
   module HasService
     extend ActiveSupport::Concern
 
-    included do
-      register_extension :has_service
-    end
-
     def collection
       respond_with build_collection, name: collection_name, present: :collection
     end

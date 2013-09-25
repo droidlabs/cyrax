@@ -4,7 +4,6 @@ module Cyrax::Extensions
     extend ActiveSupport::Concern
 
     included do
-      register_extension :has_resource
       class_attribute :resource_name
       class_attribute :resource_class_name
       class_attribute :collection_name

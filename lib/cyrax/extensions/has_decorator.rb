@@ -3,7 +3,6 @@ module Cyrax::Extensions
     extend ActiveSupport::Concern
 
     included do
-      register_extension :has_decorator
       class_attribute :decorator_class_name
     end
 

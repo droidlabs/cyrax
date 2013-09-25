@@ -36,7 +36,7 @@ module Cyrax::Extensions
 
     def respond_with(result, options = {})
       name = options[:name] || response_name
-      if has_extension?(:has_decorator)
+      if respond_to?(:decorable?)
         options.merge!(decorable: decorable?, decorator_class: decorator_class)
         result = Cyrax::BasePresenter.present(result, options)
       end
