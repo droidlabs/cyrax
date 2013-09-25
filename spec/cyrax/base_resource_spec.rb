@@ -4,10 +4,6 @@ class Foo; end
 module Cyrax
   describe BaseResource do
     describe 'it should behave like resource' do
-      context 'class methods' do
-        subject { Cyrax::BaseResource }
-        it{ should respond_to(:new) }
-      end
       context 'instance methods' do
         subject { Cyrax::BaseResource.new }
         it{ should respond_to(:accessor) }
@@ -35,14 +31,14 @@ module Cyrax
     before do
       subject.stub!(:params).and_return({id:123})
       subject.stub!(:find_resource).and_return(resource)
-      subject.stub!(:resource_name).and_return('foo')
+      subject.class.send :resource, :foo
     end
 
-    describe '#collection' do
+    describe '#read_all' do
       it 'responds with decorated collection' do
         subject.should_receive(:build_collection).and_return(collection)
         subject.should_receive(:respond_with).with(collection, name: 'foos', present: :collection)
-        subject.collection
+        subject.read_all
       end
     end
 

@@ -7,6 +7,7 @@ module Cyrax::Extensions
       register_extension :has_resource
       class_attribute :resource_name
       class_attribute :resource_class_name
+      class_attribute :collection_name
     end
 
     def resource_class
@@ -19,10 +20,6 @@ module Cyrax::Extensions
 
     def resource_scope
       resource_class
-    end
-
-    def collection_name
-      resource_name.pluralize
     end
 
     def resource_attributes
@@ -64,6 +61,7 @@ module Cyrax::Extensions
       def resource(name, options = {})
         self.resource_name = name.to_s
         self.resource_class_name = options[:class_name]
+        self.collection_name = name.to_s.pluralize
       end
     end
 
