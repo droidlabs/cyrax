@@ -11,8 +11,8 @@ module Cyrax::Extensions
     end
 
     def resource_class
-      if self.class.resource_class_name
-        self.class.resource_class_name.constantize
+      if self.resource_class_name
+        self.resource_class_name.constantize
       else
         resource_name.classify.constantize
       end
@@ -24,24 +24,6 @@ module Cyrax::Extensions
 
     def resource_attributes
       filter_attributes(dirty_resource_attributes)
-    end
-
-    def build_resource(id, attributes = {})
-      if id.present?
-        resource = find_resource(id)
-        resource.attributes = attributes
-        resource
-      else
-        resource_scope.new(default_resource_attributes.merge(attributes))
-      end
-    end
-
-    def build_collection
-      resource_scope
-    end
-
-    def find_resource(id)
-      resource_scope.find(id)
     end
 
     def response_name
