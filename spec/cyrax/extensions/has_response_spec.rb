@@ -8,8 +8,8 @@ module Cyrax
   describe Cyrax::Extensions::HasResponse do
     subject { BaseWithResponse.new }
     before do
-      subject.stub!(:decorable?).and_return(false)
-      subject.stub!(:decorator_class).and_return(nil)
+      subject.stub(:decorable?).and_return(false)
+      subject.stub(:decorator_class).and_return(nil)
     end
 
     describe '#set_message' do
@@ -40,8 +40,8 @@ module Cyrax
 
     describe '#add_errors_from' do
       let(:messages) { [[:foo, 'bar'], [:bar, 'bazz']]}
-      let(:errors) { mock(messages: messages)}
-      let(:model) { mock(errors: errors) }
+      let(:errors) { double(messages: messages)}
+      let(:model) { double(errors: errors) }
 
       it 'should add errors from model error messages' do
         subject.add_errors_from(model)
@@ -57,9 +57,9 @@ module Cyrax
     end
 
     describe '#respond_with' do
-      before { subject.stub!(:response_name).and_return(:foo) }
+      before { subject.stub(:response_name).and_return(:foo) }
       it 'calls Cyrax::Response' do
-        Cyrax::Response.should_receive(:new).with(:foo, 'bar').and_return(mock.as_null_object)
+        Cyrax::Response.should_receive(:new).with(:foo, 'bar').and_return(double.as_null_object)
         subject.respond_with('bar')
       end
 
@@ -68,7 +68,7 @@ module Cyrax
       end
 
       it 'should assign message, errors and additional assignments to response object' do
-        response = mock
+        response = double
         Cyrax::Response.should_receive(:new).and_return(response)
         response.should_receive(:message=)
         response.should_receive(:errors=)

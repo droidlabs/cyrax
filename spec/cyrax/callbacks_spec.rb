@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Cyrax
   describe Callbacks do
-    subject { Cyrax::Callbacks.new(mock) }
+    subject { Cyrax::Callbacks.new(double) }
 
     it { should respond_to(:before_create) }
     it { should respond_to(:after_create) }

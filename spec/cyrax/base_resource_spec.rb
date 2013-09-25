@@ -26,11 +26,11 @@ module Cyrax
     end
 
     subject { Cyrax::BaseResource.new }
-    let(:resource) { mock.as_null_object }
-    let(:collection) { [mock] }
+    let(:resource) { double.as_null_object }
+    let(:collection) { [double] }
     before do
-      subject.stub!(:params).and_return({id:123})
-      subject.stub!(:find_resource).and_return(resource)
+      subject.stub(:params).and_return({id:123})
+      subject.stub(:find_resource).and_return(resource)
       subject.class.send :resource, :foo
     end
 
@@ -87,7 +87,7 @@ module Cyrax
 
     describe '#create' do
       let(:params) { {foo: 'bar'} }
-      before { subject.stub!(:build_resource).and_return(resource) }
+      before { subject.stub(:build_resource).and_return(resource) }
       it 'responds with resource' do
         subject.should_receive(:build_resource).with(nil, params)
         subject.should_receive(:respond_with).with(resource)
@@ -95,7 +95,7 @@ module Cyrax
       end
 
       context 'when resource successfully saved' do
-        before { resource.stub!(:save).and_return(true) }
+        before { resource.stub(:save).and_return(true) }
 
         it 'invokes callbacks' do
           subject.should_receive(:invoke_callback).with(:before_save, resource)
@@ -112,7 +112,7 @@ module Cyrax
       end
 
       context 'when resource could not be saved' do
-        before { resource.stub!(:save).and_return(false) }
+        before { resource.stub(:save).and_return(false) }
 
         it 'invokes callbacks' do
           subject.should_receive(:invoke_callback).with(:before_save, resource)
@@ -131,7 +131,7 @@ module Cyrax
 
     describe '#update' do
       let(:params) { {foo: 'bar'} }
-      before { subject.stub!(:build_resource).and_return(resource) }
+      before { subject.stub(:build_resource).and_return(resource) }
       it 'responds with resource' do
         subject.should_receive(:build_resource).with(123, params)
         subject.should_receive(:respond_with).with(resource)
@@ -139,7 +139,7 @@ module Cyrax
       end
 
       context 'when resource successfully saved' do
-        before { resource.stub!(:save).and_return(true) }
+        before { resource.stub(:save).and_return(true) }
 
         it 'invokes callbacks' do
           subject.should_receive(:invoke_callback).with(:before_save, resource)
@@ -156,7 +156,7 @@ module Cyrax
       end
 
       context 'when resource could not be saved' do
-        before { resource.stub!(:save).and_return(false) }
+        before { resource.stub(:save).and_return(false) }
 
         it 'invokes callbacks' do
           subject.should_receive(:invoke_callback).with(:before_save, resource)

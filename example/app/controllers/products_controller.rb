@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   respond_to :html
 
   def index
-    respond_with resource.collection
+    respond_with resource.read_all
   end
 
   def show

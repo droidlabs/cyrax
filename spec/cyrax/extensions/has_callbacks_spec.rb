@@ -10,17 +10,17 @@ module Cyrax
 
     describe '#invoke_callback' do
       context 'when callback handler class is not defined' do
-        let(:name) { mock }
-        let(:resource) { mock }
-        before { subject.class.stub!(:resource_callbacks_handler_class) }
+        let(:name) { double }
+        let(:resource) { double }
+        before { subject.class.stub(:resource_callbacks_handler_class) }
         it { subject.invoke_callback(name, resource).should be_nil }
       end
 
       context 'when callback handler class is defined' do
         let(:name) { "foo" }
-        let(:resource) { mock }
+        let(:resource) { double }
         let(:handle_class) { double.as_null_object }
-        before { subject.class.stub!(:resource_callbacks_handler_class).and_return(handle_class) }
+        before { subject.class.stub(:resource_callbacks_handler_class).and_return(handle_class) }
 
         it 'initializes handle class instance' do
           handle_class.should_receive(:new).with(resource)
@@ -29,7 +29,7 @@ module Cyrax
 
         it 'calls corresponding method on instance' do
           instance = double.as_null_object
-          handle_class.stub!(:new).and_return(instance)
+          handle_class.stub(:new).and_return(instance)
           instance.should_receive(:foo)
           subject.invoke_callback(name, resource)
         end

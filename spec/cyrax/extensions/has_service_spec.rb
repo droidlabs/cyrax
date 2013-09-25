@@ -19,13 +19,13 @@ module Cyrax
 
     describe 'instance methods' do
       describe '#build_collection' do
-        before { subject.stub!(:resource_scope).and_return(Foo) }
+        before { subject.stub(:resource_scope).and_return(Foo) }
         its(:build_collection) { should eq(Foo) }
       end
 
       describe '#find_resource' do
-        let(:resource_scope) { mock }
-        before { subject.stub!(:resource_scope).and_return(resource_scope) }
+        let(:resource_scope) { double }
+        before { subject.stub(:resource_scope).and_return(resource_scope) }
         it 'finds resource by id' do
           allow_message_expectations_on_nil
           resource_scope.should_receive(:find).with(123)
@@ -35,9 +35,9 @@ module Cyrax
 
       describe '#build_resource' do
         context 'when id is nil' do
-          let(:resource_scope) { mock }
-          before { subject.stub!(:resource_scope).and_return(resource_scope) }
-          before { subject.stub!(:default_resource_attributes).and_return({}) }
+          let(:resource_scope) { double }
+          before { subject.stub(:resource_scope).and_return(resource_scope) }
+          before { subject.stub(:default_resource_attributes).and_return({}) }
           it 'initializes new object' do
             allow_message_expectations_on_nil
             resource_scope.should_receive(:new).with({foo: 'bar'})
@@ -45,14 +45,14 @@ module Cyrax
           end
         end
         context 'when id is present' do
-          let(:resource) { mock.as_null_object }
+          let(:resource) { double.as_null_object }
           it 'finds resource' do
             subject.should_receive(:find_resource).with(123).and_return(resource)
             subject.build_resource(123, {foo: 'bar'})
           end
 
           it 'assigns provided attributes' do
-            subject.stub!(:find_resource).and_return(resource)
+            subject.stub(:find_resource).and_return(resource)
             resource.should_receive(:attributes=).with({foo: 'bar'})
             subject.build_resource(123, {foo: 'bar'})
           end

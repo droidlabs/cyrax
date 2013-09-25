@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Cyrax
   describe Decorator do
-    let(:decorable) { mock(foo:'bar') }
+    let(:decorable) { double(foo:'bar') }
     subject { Cyrax::Decorator.new(decorable) }
 
     its(:resource) { should eq(decorable) }

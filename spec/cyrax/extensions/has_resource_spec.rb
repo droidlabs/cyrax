@@ -56,13 +56,13 @@ module Cyrax
       end
 
       describe '#resource_scope' do
-        before { subject.stub!(:resource_class).and_return(Foo) }
+        before { subject.stub(:resource_class).and_return(Foo) }
         its(:resource_scope) { should eq(Foo) }
       end
 
       describe '#resource_attributes' do
-        let(:dirty_resource_attributes) { mock }
-        before { subject.stub!(:dirty_resource_attributes).and_return(dirty_resource_attributes)}
+        let(:dirty_resource_attributes) { double }
+        before { subject.stub(:dirty_resource_attributes).and_return(dirty_resource_attributes)}
         it 'filters dirty attributes' do
           subject.should_receive(:filter_attributes).with(dirty_resource_attributes)
           subject.resource_attributes
@@ -74,15 +74,15 @@ module Cyrax
       describe '#dirty_resource_attributes' do
         context 'when params are present' do
           it 'should return from params by resource_name' do
-            subject.stub!(:resource_name).and_return(:foo)
-            subject.stub!(:params).and_return({foo: {bar: 'bazz'}})
+            subject.stub(:resource_name).and_return(:foo)
+            subject.stub(:params).and_return({foo: {bar: 'bazz'}})
             subject.send(:dirty_resource_attributes).should eq({bar: 'bazz'})
           end
         end
         context 'when there are no params' do
           it 'should return empty hash' do
-            subject.stub!(:resource_name).and_return(:foo)
-            subject.stub!(:params).and_return({})
+            subject.stub(:resource_name).and_return(:foo)
+            subject.stub(:params).and_return({})
             subject.send(:dirty_resource_attributes).should eq({})
           end
         end
