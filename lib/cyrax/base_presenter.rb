@@ -5,7 +5,7 @@ class Cyrax::BasePresenter
     if options[:decorable] && should_decorate
       present_with_decoration(object, options)
     else
-      object
+      present_without_decoration(object, options)
     end
   end
 
@@ -18,10 +18,18 @@ class Cyrax::BasePresenter
   private
 
   def present_with_decoration(object, options)
-    if options[:present] == :collection 
+    if options[:present] == :collection
       options[:decorator_class].decorate_collection(object)
     else
       options[:decorator_class].decorate(object)
+    end
+  end
+
+  def present_without_decoration(object, options)
+    if options[:present] == :collection
+      Cyrax::BaseCollectionPresenter.new(object).fetched_collection
+    else
+      object
     end
   end
 end

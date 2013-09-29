@@ -1,8 +1,8 @@
-class Cyrax::CollectionDecorator
-  attr_reader :decorator_class, :collection
+class Cyrax::DecoratedCollectionPresenter < Cyrax::BaseCollectionPresenter
+  attr_reader :decorator_class
 
   def initialize(collection, options = {})
-    @collection = collection
+    super
     @decorator_class = options[:decorator_class]
     raise "Decorator class is not defined! Please define it with option :decorator_class" unless decorator_class
   end
@@ -16,16 +16,6 @@ class Cyrax::CollectionDecorator
 
   def decorated_collection
     @decorated_collection ||= fetched_collection.map {|item| decorate_item(item)}
-  end
-
-  def fetched_collection
-    if collection.is_a?(ActiveRecord::Relation)
-      collection.to_a
-    elsif collection.respond_to?(:all)
-      collection.all
-    else
-      Array.wrap collection
-    end
   end
 
   def method_missing(method, *args, &block)
