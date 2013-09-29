@@ -1,4 +1,6 @@
 class Cyrax::BaseCollectionPresenter
+  attr_reader :collection
+  
   def initialize(collection, options = {})
     @collection = collection
   end
