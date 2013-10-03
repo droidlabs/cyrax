@@ -19,9 +19,9 @@ class Cyrax::BasePresenter
 
   def present_with_decoration(object, options)
     if options[:present] == :collection
-      options[:decorator_class].decorate_collection(object)
+      options[:decorator].decorate_collection(object)
     else
-      options[:decorator_class].decorate(object)
+      options[:decorator].decorate(object)
     end
   end
 

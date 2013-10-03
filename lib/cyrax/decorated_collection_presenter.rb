@@ -1,10 +1,10 @@
 class Cyrax::DecoratedCollectionPresenter < Cyrax::BaseCollectionPresenter
-  attr_reader :decorator_class
+  attr_reader :decorator
 
   def initialize(collection, options = {})
     super
-    @decorator_class = options[:decorator_class]
-    raise "Decorator class is not defined! Please define it with option :decorator_class" unless decorator_class
+    @decorator = options[:decorator]
+    raise "Decorator class is not defined! Please define it with option :decorator" unless decorator
   end
 
   class << self
