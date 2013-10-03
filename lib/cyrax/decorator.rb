@@ -31,7 +31,7 @@ class Cyrax::Decorator
     alias_method :decorate, :new
 
     def decorate_collection(resource)
-      Cyrax::DecoratedCollectionPresenter.decorate(resource, decorator_class: self)
+      Cyrax::DecoratedCollectionPresenter.decorate(resource, decorator: self)
     end
   end
 end
