@@ -26,6 +26,6 @@ class Cyrax::DecoratedCollectionPresenter < Cyrax::BaseCollectionPresenter
   private
 
   def decorate_item(item)
-    decorator_class.new(item)
+    decorator.new(item)
   end
 end
