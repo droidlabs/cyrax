@@ -40,9 +40,12 @@ module Cyrax::Extensions
       name = options[:name] || response_name
       result = result.result.to_model if result.is_a?(Cyrax::Response)
       if respond_to?(:decorable?) && decorable?
-        options.merge!(decorator: decorator_class)
-        result = Cyrax::Presenter.present(result, options)
+        options = {decorator: decorator_class}.merge(options)
       end
+      if respond_to?(:seializable?) && seializable?
+        options = {serializer: serializer_class}.merge(options)
+      end
+      result = Cyrax::Presenter.present(result, options)
       response = Cyrax::Response.new(name, result)
       response.message = @_message
       response.errors = @_errors

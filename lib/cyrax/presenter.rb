@@ -1,5 +1,4 @@
 class Cyrax::Presenter
-
   def present(object, options = {})
     should_decorate = options[:decorate].nil? || options[:decorate]
     if options[:decorator] && should_decorate

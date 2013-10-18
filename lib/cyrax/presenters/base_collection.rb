@@ -21,7 +21,7 @@ module Cyrax::Presenters
 
     def as_json
       if options[:serializer]
-        options[:serializer].new(presented_collection).as_json
+        options[:serializer].new(presented_collection).serialize
       else
         presented_collection.as_json
       end
