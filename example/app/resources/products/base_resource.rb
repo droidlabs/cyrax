@@ -1,4 +1,4 @@
-class Products::BaseResource < Cyrax::BaseResource
-  resource :product, class_name: 'Product'
-  decorator 'Products::Decorator'
+class Products::BaseResource < Cyrax::Resource
+  resource :product
+  decorator Products::Decorator
 end

@@ -1,5 +1,4 @@
-class Products::UserResource < Cyrax::BaseResource
-
+class Products::UserResource < Products::BaseResource
   def resource_scope
     accessor.products
   end

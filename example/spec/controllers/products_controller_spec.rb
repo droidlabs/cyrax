@@ -41,7 +41,7 @@ describe ProductsController do
       product = user.products.create! valid_attributes
       get :index, {}, valid_session
       # response.should be_success
-      assigns(:products).should be_kind_of(Array)
+      assigns(:products).should be_kind_of(Cyrax::Presenters::BaseCollection)
       assigns(:products).first.should be_kind_of(Products::Decorator) #.new(product)])
     end
   end
@@ -50,14 +50,14 @@ describe ProductsController do
     it "assigns the requested product as @product" do
       product = user.products.create! valid_attributes
       get :show, {:id => product.to_param}, valid_session
-      assigns(:product).should eq(product)
+      assigns(:product).to_model.should eq(product)
     end
   end
 
   describe "GET new" do
     it "assigns a new product as @product" do
       get :new, {}, valid_session
-      assigns(:product).should be_a_new(Product)
+      assigns(:product).to_model.should be_a_new(Product)
     end
   end
 
@@ -65,7 +65,7 @@ describe ProductsController do
     it "assigns the requested product as @product" do
       product = user.products.create! valid_attributes
       get :edit, {:id => product.to_param}, valid_session
-      assigns(:product).should eq(product)
+      assigns(:product).to_model.should eq(product)
     end
   end
 
@@ -79,8 +79,8 @@ describe ProductsController do
 
       it "assigns a newly created product as @product" do
         post :create, {:product => valid_attributes}, valid_session
-        assigns(:product).should be_a(Product)
-        assigns(:product).should be_persisted
+        assigns(:product).to_model.should be_a(Product)
+        assigns(:product).to_model.should be_persisted
       end
 
       it "redirects to the created product" do
@@ -94,7 +94,7 @@ describe ProductsController do
         # Trigger the behavior that occurs when invalid params are submitted
         Product.any_instance.stub(:save).and_return(false)
         post :create, {:product => { "vendor" => "invalid value" }}, valid_session
-        assigns(:product).should be_a_new(Product)
+        assigns(:product).to_model.should be_a_new(Product)
       end
 
       it "sets 302 response status" do
@@ -112,7 +112,7 @@ describe ProductsController do
       it "assigns the requested product as @product" do
         product = user.products.create! valid_attributes
         put :update, {:id => product.to_param, :product => valid_attributes}, valid_session
-        assigns(:product).should eq(product)
+        assigns(:product).to_model.should eq(product)
       end
 
       it "redirects to the product" do
@@ -128,7 +128,7 @@ describe ProductsController do
         # Trigger the behavior that occurs when invalid params are submitted
         Product.any_instance.stub(:save).and_return(false)
         put :update, {:id => product.to_param, :product => { "vendor" => "invalid value" }}, valid_session
-        assigns(:product).should eq(product)
+        assigns(:product).to_model.should eq(product)
       end
 
       it "sets 302 response status" do

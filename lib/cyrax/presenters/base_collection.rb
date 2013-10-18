@@ -1,9 +1,10 @@
 module Cyrax::Presenters
   class BaseCollection
-    attr_reader :collection
+    attr_reader :collection, :options
     
     def initialize(collection, options = {})
       @collection = collection
+      @options = options
     end
 
     array_methods = Array.instance_methods - Object.instance_methods

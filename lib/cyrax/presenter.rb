@@ -18,7 +18,7 @@ class Cyrax::Presenter
 
   def present_with_decoration(object, options)
     if options[:present] == :collection
-      Cyrax::Presenters::DecoratedCollection.new(object, options).present
+      Cyrax::Presenters::DecoratedCollection.new(object, options)
     else
       options[:decorator].decorate(object)
     end
@@ -26,7 +26,7 @@ class Cyrax::Presenter
 
   def present_without_decoration(object, options)
     if options[:present] == :collection
-      Cyrax::Presenters::BaseCollection.new(object, options).present
+      Cyrax::Presenters::BaseCollection.new(object, options)
     else
       object
     end
