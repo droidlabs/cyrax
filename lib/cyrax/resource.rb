@@ -1,4 +1,4 @@
-class Cyrax::BaseResource < Cyrax::Base
+class Cyrax::Resource < Cyrax::Base
   include Cyrax::Extensions::HasResource
   include Cyrax::Extensions::HasCallbacks
   include Cyrax::Extensions::HasService

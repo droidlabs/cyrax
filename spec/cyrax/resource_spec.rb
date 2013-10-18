@@ -2,10 +2,10 @@ require 'spec_helper'
 
 class Foo; end
 module Cyrax
-  describe BaseResource do
+  describe Resource do
     describe 'it should behave like resource' do
       context 'instance methods' do
-        subject { Cyrax::BaseResource.new }
+        subject { Cyrax::Resource.new }
         it{ should respond_to(:accessor) }
         it{ should respond_to(:params) }
         it{ should respond_to(:resource_name) }
@@ -25,7 +25,7 @@ module Cyrax
       end
     end
 
-    subject { Cyrax::BaseResource.new }
+    subject { Cyrax::Resource.new }
     let(:resource) { double.as_null_object }
     let(:collection) { [double] }
     before do

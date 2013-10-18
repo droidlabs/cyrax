@@ -9,7 +9,6 @@ module Cyrax::Extensions
 
     def assign_resource(resource_name, resource, options = {})
       if options[:decorator]
-        options.merge!(decorable: true)
         resource = Cyrax::BasePresenter.present(resource, options)
       end
       @_assignments ||= {}
@@ -40,9 +39,9 @@ module Cyrax::Extensions
     def respond_with(result, options = {})
       name = options[:name] || response_name
       result = result.result.to_model if result.is_a?(Cyrax::Response)
-      if respond_to?(:decorable?)
-        options.merge!(decorable: decorable?, decorator: decorator_class)
-        result = Cyrax::BasePresenter.present(result, options)
+      if respond_to?(:decorable?) && decorable?
+        options.merge!(decorator: decorator_class)
+        result = Cyrax::Presenter.present(result, options)
       end
       response = Cyrax::Response.new(name, result)
       response.message = @_message

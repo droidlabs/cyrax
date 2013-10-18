@@ -1,3 +1,11 @@
+=== 0.3.0
+* Cyrax::DecoratedCollectionPresenter renamed to Cyrax::Presenters::DecoratedCollection
+* Cyrax::BaseCollectionPresenter renamed to Cyrax::Presenters::BaseCollection
+* Cyrax::BasePresenter renamed to Cyrax::Presenter
+* Cyrax::BaseResource renamed to Cyrax::Resource
+* Decorator#decorate_collection has been removed
+* Cyrax::Serializer has been added
+
 === 0.2.5 - 0.2.12
 * Small improvements
 
