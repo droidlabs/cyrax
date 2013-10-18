@@ -5,6 +5,7 @@
 * Cyrax::BaseResource renamed to Cyrax::Resource
 * Decorator#decorate_collection has been removed
 * Cyrax::Serializer has been added
+* Added transaction to services
 
 === 0.2.5 - 0.2.12
 * Small improvements

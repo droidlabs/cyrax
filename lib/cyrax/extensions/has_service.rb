@@ -13,14 +13,16 @@ module Cyrax::Extensions
 
     def create(custom_attributes=nil)
       resource = build_resource(nil, custom_attributes||resource_attributes)
-      invoke_callback(:before_create, resource)
-      invoke_callback(:before_save, resource)
-      if save_resource(resource)
-        invoke_callback(:after_create, resource)
-        invoke_callback(:after_save, resource)
-        set_message("#{resource_name.titleize} successfully created")
-      else
-        add_errors_from(resource)
+      transaction do
+        invoke_callback(:before_create, resource)
+        invoke_callback(:before_save, resource)
+        if save_resource(resource)
+          invoke_callback(:after_create, resource)
+          invoke_callback(:after_save, resource)
+          set_message("#{resource_name.titleize} successfully created")
+        else
+          add_errors_from(resource)
+        end
       end
       respond_with(resource)
     end
@@ -33,23 +35,27 @@ module Cyrax::Extensions
 
     def update(custom_attributes=nil)
       resource = build_resource(params[:id], custom_attributes||resource_attributes)
-      invoke_callback(:before_update, resource)
-      invoke_callback(:before_save, resource)
-      if save_resource(resource)
-        invoke_callback(:after_update, resource)
-        invoke_callback(:after_save, resource)
-        set_message("#{resource_name.titleize} successfully updated")
-      else
-        add_errors_from(resource)
+      transaction do
+        invoke_callback(:before_update, resource)
+        invoke_callback(:before_save, resource)
+        if save_resource(resource)
+          invoke_callback(:after_update, resource)
+          invoke_callback(:after_save, resource)
+          set_message("#{resource_name.titleize} successfully updated")
+        else
+          add_errors_from(resource)
+        end
       end
       respond_with(resource)
     end
 
     def destroy
       resource = find_resource(params[:id])
-      invoke_callback(:before_destroy, resource)
-      delete_resource(resource)
-      invoke_callback(:after_destroy, resource)
+      transaction do
+        invoke_callback(:before_destroy, resource)
+        delete_resource(resource)
+        invoke_callback(:after_destroy, resource)
+      end
       respond_with(resource)
     end
 
@@ -77,6 +83,16 @@ module Cyrax::Extensions
 
     def build_collection
       resource_scope
+    end
+
+    def transaction(&block)
+      if defined?(ActiveRecord::Base)
+        ActiveRecord::Base.transaction do
+          block.call
+        end
+      else
+        block.call
+      end
     end
   end
 end
