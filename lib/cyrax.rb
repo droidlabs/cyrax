@@ -27,4 +27,17 @@ module Cyrax
   def self.strong_parameters=(value)
     @@strong_parameters = value
   end
+
+  def self.const_missing(const_name)
+    case const_name
+    when :BaseResource
+      warn "`Cyrax::BaseResource` has been deprecated. Use `Cyrax::Resource` instead."
+      Cyrax::Resource
+    when :DecoratedCollectionPresenter
+      warn "`Cyrax:DecoratedCollectionPresenter` has been deprecated. Use `Cyrax::Presenters::DecoratedCollection` instead."
+      Cyrax::Presenters::DecoratedCollection
+    else
+      super
+    end
+  end
 end
