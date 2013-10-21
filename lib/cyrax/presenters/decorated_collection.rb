@@ -11,6 +11,10 @@ module Cyrax::Presenters
       @decorated_collection ||= super.map {|item| decorate_item(item)}
     end
 
+    def self.decorate(*args)
+      new(*args).presented_collection
+    end
+
     private
 
       def decorate_item(item)
