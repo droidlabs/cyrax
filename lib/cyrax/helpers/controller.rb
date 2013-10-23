@@ -8,6 +8,7 @@ module Cyrax::ControllerHelper
       }
       set_resource_from(response)
       flash[:notice] = response.notice if response.notice.present?
+      flash[:error] = response.error if response.error.present?
 
       # convert result to model if possible
       result = response.result
