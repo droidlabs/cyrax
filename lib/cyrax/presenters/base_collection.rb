@@ -1,7 +1,7 @@
 module Cyrax::Presenters
   class BaseCollection
     attr_reader :collection, :options
-    
+
     def initialize(collection, options = {})
       @collection = collection
       @options = options
@@ -20,7 +20,7 @@ module Cyrax::Presenters
       end
     end
 
-    def as_json
+    def as_json(*args)
       if options[:serializer]
         options[:serializer].new(presented_collection).serialize
       else
