@@ -1,3 +1,7 @@
+== 0.3.1
+* Deprecate callbacks
+* Add action method aliases, e.g. read!, read_all!
+
 === 0.3.0
 * Cyrax::DecoratedCollectionPresenter renamed to Cyrax::Presenters::DecoratedCollection
 * Cyrax::BaseCollectionPresenter renamed to Cyrax::Presenters::BaseCollection
