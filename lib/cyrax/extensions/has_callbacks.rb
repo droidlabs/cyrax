@@ -1,5 +1,6 @@
 require 'active_support/core_ext/object'
 require 'active_support/core_ext/class'
+require 'active_support/deprecation'
 
 module Cyrax::Extensions
   module HasCallbacks
@@ -17,6 +18,7 @@ module Cyrax::Extensions
 
     module ClassMethods
       def callbacks_handler(name, options = {})
+        ActiveSupport::Deprecation.warn "#callbacks_handler is deprecated. Redefine method and use short alias instead"
         self.resource_callbacks_handler_class = name
       end
     end
