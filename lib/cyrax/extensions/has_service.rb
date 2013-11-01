@@ -22,7 +22,7 @@ module Cyrax::Extensions
           invoke_callback(:after_create, resource)
           invoke_callback(:after_save, resource)
           set_message("#{resource_name.titleize} successfully created")
-          block.call if block_given?
+          block.call(resource) if block_given?
         else
           add_errors_from(resource)
         end
@@ -48,7 +48,7 @@ module Cyrax::Extensions
           invoke_callback(:after_update, resource)
           invoke_callback(:after_save, resource)
           set_message("#{resource_name.titleize} successfully updated")
-          block.call if block_given?
+          block.call(resource) if block_given?
         else
           add_errors_from(resource)
         end
@@ -63,7 +63,7 @@ module Cyrax::Extensions
         invoke_callback(:before_destroy, resource)
         delete_resource(resource)
         invoke_callback(:after_destroy, resource)
-        block.call if block_given?
+        block.call(resource) if block_given?
       end
       respond_with(resource)
     end
