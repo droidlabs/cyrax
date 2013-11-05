@@ -9,7 +9,7 @@ module Cyrax::Extensions
 
     def assign_resource(resource_name, resource, options = {})
       if options[:decorator]
-        resource = Cyrax::BasePresenter.present(resource, options)
+        resource = Cyrax::Presenter.present(resource, options)
       end
       @_assignments ||= {}
       @_assignments[resource_name.to_sym] = resource
