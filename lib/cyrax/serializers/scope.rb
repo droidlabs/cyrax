@@ -25,6 +25,14 @@ module Cyrax::Serializers
     end
 
     def serialize(resource, options = {})
+      if resource.is_a?(Array)
+        resource.map{ |r| serialize_one(r, options) }
+      else
+        serialize_one(resource, options)
+      end
+    end
+
+    def serialize_one(resource, options = {})
       result = {}
       @attrs.map do |attribute, options|
         value = resource.send(attribute)
@@ -34,7 +42,7 @@ module Cyrax::Serializers
         result[attribute] = value
       end
       @dynamic_attrs.map do |attribute, block|
-        result[attribute] = options[:serializer].instance_eval(&block)
+        result[attribute] = options[:serializer].instance_exec(resource, &block)
       end
       result
     end

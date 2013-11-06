@@ -1,3 +1,6 @@
+== 0.3.4
+* Better serializers + bug fixes
+
 == 0.3.3
 * Pass presenter object in initializer instead of `present` method
 * Serializer now supports dynamic attrs

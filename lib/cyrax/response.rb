@@ -39,6 +39,10 @@ class Cyrax::Response
     errors && errors.include?(error)
   end
 
+  def as_json(*args)
+    result.as_json(*args)
+  end
+
   def method_missing(method, *args, &block)
     super unless assignments.has_key?(method)
     assignments[method]

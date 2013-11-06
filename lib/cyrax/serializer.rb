@@ -17,8 +17,8 @@ class Cyrax::Serializer < Cyrax::Wrapper
       scope.attributes(*attrs)
     end
 
-    def attribute(attribute, options = {})
-      scope.attribute(attribute, options)
+    def attribute(attribute, options = {}, &block)
+      scope.attribute(attribute, options, &block)
     end
   end
 end
