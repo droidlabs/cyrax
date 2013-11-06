@@ -1,3 +1,8 @@
+== 0.3.3
+* Pass presenter object in initializer instead of `present` method
+* Serializer now supports dynamic attrs
+* Serializer/Presenter/Decorator now have one interface
+
 == 0.3.2
 * Small fix
 * Pass resource to blocks in method aliases

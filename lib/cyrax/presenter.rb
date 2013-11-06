@@ -1,34 +1,34 @@
-class Cyrax::Presenter
-  def present(object, options = {})
+class Cyrax::Presenter < Cyrax::Wrapper
+  def present
     should_decorate = options[:decorate].nil? || options[:decorate]
     if options[:decorator] && should_decorate
-      present_with_decoration(object, options)
+      present_with_decoration(resource, options)
     else
-      present_without_decoration(object, options)
+      present_without_decoration(resource, options)
     end
   end
 
   class << self
-    def present(object, options = {})
-      self.new.present(object, options)
+    def present(resource, options = {})
+      self.new(resource, options).present
     end
   end
 
   private
 
-  def present_with_decoration(object, options)
+  def present_with_decoration(resource, options)
     if options[:present] == :collection
-      Cyrax::Presenters::DecoratedCollection.new(object, options)
+      Cyrax::Presenters::DecoratedCollection.new(resource, options)
     else
-      options[:decorator].decorate(object)
+      options[:decorator].decorate(resource)
     end
   end
 
-  def present_without_decoration(object, options)
+  def present_without_decoration(resource, options)
     if options[:present] == :collection
-      Cyrax::Presenters::BaseCollection.new(object, options)
+      Cyrax::Presenters::BaseCollection.new(resource, options)
     else
-      object
+      resource
     end
   end
 end

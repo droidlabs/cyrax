@@ -1,14 +1,8 @@
 require 'active_model'
-class Cyrax::Decorator
+class Cyrax::Decorator < Cyrax::Wrapper
   include ActiveModel::Serialization
   include ActiveModel::Serializers::JSON
   include ActiveModel::Serializers::Xml
-
-  attr_accessor :resource
-
-  def initialize(resource)
-    @resource = resource
-  end
 
   def to_model
     resource

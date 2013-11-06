@@ -1,11 +1,7 @@
-class Cyrax::Serializer
-  attr_accessor :object
-  def initialize(object)
-    @object = object
-  end
-
+class Cyrax::Serializer < Cyrax::Wrapper
   def serialize
-    self.class.scope.serialize(object)
+    options[:serializer] = self
+    self.class.scope.serialize(resource, options)
   end
 
   class << self

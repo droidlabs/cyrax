@@ -37,6 +37,7 @@ module Cyrax::Extensions
     end
 
     def respond_with(result, options = {})
+      options[:as] ||= accessor
       name = options[:name] || response_name
       result = result.result.to_model if result.is_a?(Cyrax::Response)
       if respond_to?(:decorable?) && decorable?
