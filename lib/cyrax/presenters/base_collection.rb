@@ -14,7 +14,7 @@ module Cyrax::Presenters
       if collection.is_a?(ActiveRecord::Relation)
         collection.to_a
       elsif collection.respond_to?(:all)
-        collection.all
+        collection.all.to_a
       else
         Array.wrap collection
       end

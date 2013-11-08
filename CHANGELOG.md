@@ -1,3 +1,6 @@
+== 0.3.5
+* Fix wrapping not decorated collection
+
 == 0.3.4
 * Better serializers + bug fixes
 
