@@ -1,3 +1,6 @@
+== 0.3.6
+* More fixes for serializable
+
 == 0.3.5
 * Fix wrapping not decorated collection
 

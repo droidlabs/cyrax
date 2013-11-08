@@ -14,7 +14,15 @@ module Cyrax::ControllerHelper
       result = response.result
       result = result.to_model if result.respond_to?(:to_model)
 
-      super(result, default_options.merge(options || {}))
+      super(result, default_options.merge(options || {})) do |format|
+        format.json do
+          if result.respond_to?(:errors) && result.errors.present?
+            render json: { errors: result.errors }
+          else
+            render json: response.as_json
+          end
+        end
+      end
     else
       super(*args)
     end

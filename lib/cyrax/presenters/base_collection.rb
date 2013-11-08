@@ -20,14 +20,6 @@ module Cyrax::Presenters
       end
     end
 
-    def as_json(*args)
-      if options[:serializer]
-        options[:serializer].new(presented_collection).serialize
-      else
-        presented_collection.as_json
-      end
-    end
-
     def method_missing(method, *args, &block)
       return super unless collection.respond_to?(method)
       collection.send(method, *args, &block)

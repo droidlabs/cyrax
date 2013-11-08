@@ -47,7 +47,7 @@ module Cyrax::Extensions
         options = {serializer: serializer_class}.merge(options)
       end
       result = Cyrax::Presenter.present(result, options)
-      response = Cyrax::Response.new(name, result)
+      response = Cyrax::Response.new(name, result, options)
       response.message = @_message
       response.errors = @_errors
       response.assignments = @_assignments

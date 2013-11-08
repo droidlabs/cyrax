@@ -1,9 +1,11 @@
 class Cyrax::Response
-  attr_accessor :message, :errors, :assignments, :result, :resource_name
+  attr_accessor :message, :errors, :assignments, 
+    :result, :resource_name, :options
 
-  def initialize(resource_name, result)
+  def initialize(resource_name, result, options)
     @resource_name = resource_name
     @result = result
+    @options = options
     @message = nil
     @errors = []
     @assignments = {}
@@ -40,7 +42,11 @@ class Cyrax::Response
   end
 
   def as_json(*args)
-    result.as_json(*args)
+    if options[:serializer]
+      options[:serializer].new(result).serialize
+    else
+      result.as_json
+    end
   end
 
   def method_missing(method, *args, &block)
