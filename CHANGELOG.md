@@ -1,4 +1,8 @@
 == 0.3.6
+* Update example to rails 4
+* Some bug fixes
+
+== 0.3.6
 * More fixes for serializable
 
 == 0.3.5

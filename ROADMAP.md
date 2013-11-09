@@ -1,4 +1,5 @@
 == 0.4.0
+* Cyrax.strong_parameters = true by default
 * One syntax for all injected classes, e.g. decorators, presenters, etc
 * Add dependency injection on resource initialization
 * Add repositories

@@ -2,7 +2,7 @@ class Cyrax::Response
   attr_accessor :message, :errors, :assignments, 
     :result, :resource_name, :options
 
-  def initialize(resource_name, result, options)
+  def initialize(resource_name, result, options = {})
     @resource_name = resource_name
     @result = result
     @options = options

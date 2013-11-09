@@ -20,6 +20,10 @@ module Cyrax::Presenters
       end
     end
 
+    def as_json(*args)
+      presented_collection.as_json(*args)
+    end
+
     def method_missing(method, *args, &block)
       return super unless collection.respond_to?(method)
       collection.send(method, *args, &block)

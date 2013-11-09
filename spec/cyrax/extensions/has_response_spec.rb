@@ -59,7 +59,7 @@ module Cyrax
     describe '#respond_with' do
       before { subject.stub(:response_name).and_return(:foo) }
       it 'calls Cyrax::Response' do
-        Cyrax::Response.should_receive(:new).with(:foo, 'bar').and_return(double.as_null_object)
+        Cyrax::Response.should_receive(:new).with(:foo, 'bar', {as: nil}).and_return(double.as_null_object)
         subject.respond_with('bar')
       end
 

@@ -11,7 +11,11 @@ doc/
 lib/bundler/man
 pkg
 rdoc
-spec/reports
-test/tmp
-test/version_tmp
 tmp
+spec/reports
+spec/dummy/db/*.sqlite3
+spec/dummy/log/*.log
+spec/dummy/tmp/
+spec/dummy/.sass-cache
+spec/dummy/public/system
+.DS_Store
