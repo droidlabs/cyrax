@@ -1,4 +1,9 @@
-== 0.3.6
+== 0.3.8
+* Added relation serialization to Cyrax::Serializer
+* Added some documentation
+* Added serializer sample
+
+== 0.3.7
 * Update example to rails 4
 * Some bug fixes
 
