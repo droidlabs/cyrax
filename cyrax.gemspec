@@ -18,10 +18,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "activemodel"
   spec.add_dependency "has_active_logger"
 
-  spec.add_development_dependency "rails"
   spec.add_development_dependency "sqlite3"
-  spec.add_development_dependency "mocha"
-  spec.add_development_dependency "rspec-rails"
-  spec.add_development_dependency "shoulda-matchers"
-  spec.add_development_dependency "factory_girl_rails"
+  spec.add_development_dependency "rspec"
 end

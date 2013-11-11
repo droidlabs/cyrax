@@ -71,6 +71,7 @@ module Cyrax
     end
 
     describe 'private methods' do
+      before { Cyrax.strong_parameters = false }
       describe '#dirty_resource_attributes' do
         context 'when params are present' do
           it 'should return from params by resource_name' do
