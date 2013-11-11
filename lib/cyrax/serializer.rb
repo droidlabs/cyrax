@@ -13,6 +13,10 @@ class Cyrax::Serializer < Cyrax::Wrapper
       scope.namespace(name, &block)
     end
 
+    def default_attributes
+      scope.default_attributes
+    end
+
     def attributes(*attrs)
       scope.attributes(*attrs)
     end

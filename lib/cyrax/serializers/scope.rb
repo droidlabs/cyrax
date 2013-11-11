@@ -3,11 +3,16 @@ module Cyrax::Serializers
     def initialize(&block)
       @attrs = {}
       @dynamic_attrs = {}
+      @default_attributes = false
       instance_eval(&block) if block_given?
     end
 
     def namespace(name, &block)
       @attrs[name] = self.class.new(&block)
+    end
+
+    def default_attributes
+      @default_attributes = true
     end
 
     def attributes(*attrs)
@@ -34,6 +39,9 @@ module Cyrax::Serializers
 
     def serialize_one(resource, options = {})
       result = {}
+      if @default_attributes && resource.respond_to?(:attributes)
+        result = resource.attributes
+      end
       @attrs.map do |attribute, options|
         value = resource.send(attribute)
         if options.is_a?(Cyrax::Serializers::Scope)
