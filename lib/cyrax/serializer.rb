@@ -13,6 +13,12 @@ class Cyrax::Serializer < Cyrax::Wrapper
       scope.namespace(name, &block)
     end
 
+    def relation(name, &block)
+      scope.relation(name, &block)
+    end
+    alias_method :has_many, :relation
+    alias_method :has_one, :relation
+
     def default_attributes
       scope.default_attributes
     end

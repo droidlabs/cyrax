@@ -9,4 +9,10 @@ FactoryGirl.define do
     # required if the Devise Confirmable module is used
     # confirmed_at Time.now
   end
+
+  factory :user_with_products, parent: :user do
+    after(:create) do |user|
+      create(:product, user: user)
+    end
+  end
 end

@@ -3,5 +3,9 @@ Store::Application.routes.draw do
 
   resources :products
 
+  namespace :api do
+    resources :products
+  end
+
   root :to => "home#index"
 end

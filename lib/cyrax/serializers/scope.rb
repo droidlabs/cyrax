@@ -3,12 +3,22 @@ module Cyrax::Serializers
     def initialize(&block)
       @attrs = {}
       @dynamic_attrs = {}
+      @relation_attrs = {}
+      @namespace_attrs = {}
       @default_attributes = false
       instance_eval(&block) if block_given?
     end
 
     def namespace(name, &block)
-      @attrs[name] = self.class.new(&block)
+      @namespace_attrs[name] = self.class.new(&block)
+    end
+
+    def relation(attribute, &block)
+      if block_given?
+        @relation_attrs[attribute] = self.class.new(&block)
+      else
+        @attrs[attribute] = attribute
+      end
     end
 
     def default_attributes
@@ -30,8 +40,8 @@ module Cyrax::Serializers
     end
 
     def serialize(resource, options = {})
-      if resource.is_a?(Array)
-        resource.map{ |r| serialize_one(r, options) }
+      if resource.respond_to?(:to_a)
+        resource.to_a.map{ |r| serialize_one(r, options) }
       else
         serialize_one(resource, options)
       end
@@ -39,18 +49,21 @@ module Cyrax::Serializers
 
     def serialize_one(resource, options = {})
       result = {}
-      if @default_attributes && resource.respond_to?(:attributes)
-        result = resource.attributes
-      end
-      @attrs.map do |attribute, options|
-        value = resource.send(attribute)
-        if options.is_a?(Cyrax::Serializers::Scope)
-          value = options.serialize(value)
-        end
-        result[attribute] = value
+      if @default_attributes
+        result = resource.attributes rescue {}
       end
       @dynamic_attrs.map do |attribute, block|
         result[attribute] = options[:serializer].instance_exec(resource, &block)
+      end
+      @relation_attrs.map do |attribute, scope|
+        value = resource.send(attribute)
+        result[attribute] = scope.serialize(value)
+      end
+      @namespace_attrs.map do |attribute, scope|
+        result[attribute] = scope.serialize(resource)
+      end
+      @attrs.map do |attribute, options|
+        result[attribute] = resource.send(attribute)
       end
       result
     end
