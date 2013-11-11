@@ -1,4 +1,4 @@
-# Cyrax
+# Cyrax [![Build Status](https://travis-ci.org/droidlabs/cyrax.png)](https://travis-ci.org/droidlabs/cyrax) [![Code Climate](https://codeclimate.com/github/droidlabs/cyrax.png)](https://codeclimate.com/github/droidlabs/cyrax) 
 ![Cyrax](http://images2.wikia.nocookie.net/__cb20121118042055/mk/images/thumb/4/44/CyraxMK9Render.png/322px-CyraxMK9Render.png)
 > Safeties disabled; combat mode engaged.
 
@@ -13,10 +13,6 @@ Add this line to your application's Gemfile:
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install cyrax
 
 ## Usage
 

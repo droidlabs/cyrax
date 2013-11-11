@@ -1,0 +1,8 @@
+rvm:
+  - 1.9.3
+  - 2.0.0
+after_script:
+  - cd example
+  - bundle
+  - rake db:setup
+  - rspec spec
