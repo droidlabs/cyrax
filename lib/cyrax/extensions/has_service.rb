@@ -5,6 +5,7 @@ module Cyrax::Extensions
     def collection
       respond_with build_collection, name: collection_name, present: :collection
     end
+    # Overrides collection with read_all
     alias_method :read_all, :collection
     alias_method :read_all!, :collection
 

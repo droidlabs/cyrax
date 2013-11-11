@@ -36,6 +36,9 @@ module Cyrax::Extensions
       self.class.name.demodulize.underscore
     end
 
+    # Generates the response for to pass to the Rails controller
+    # @param result I have no fucking idea what this is
+    # @param options [Hash] Options
     def respond_with(result, options = {})
       options[:as] ||= accessor
       name = options[:name] || response_name
@@ -43,7 +46,7 @@ module Cyrax::Extensions
       if respond_to?(:decorable?) && decorable?
         options = {decorator: decorator_class}.merge(options)
       end
-      if respond_to?(:seializable?) && seializable?
+      if respond_to?(:serializable?) && serializable?
         options = {serializer: serializer_class}.merge(options)
       end
       result = Cyrax::Presenter.present(result, options)

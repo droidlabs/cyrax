@@ -9,6 +9,7 @@ module Cyrax::Extensions
       class_attribute :collection_name
     end
 
+    # Returns the resource class as a constant - e.g. Product
     def resource_class
       if self.resource_class_name
         self.resource_class_name.constantize
@@ -17,6 +18,15 @@ module Cyrax::Extensions
       end
     end
 
+    # Returns the resource class - e.g. Product
+    # You can override this in your resource by defining the method and returning your own scope
+    #
+    # @example Overriding resource_scope
+    #   class Products::UserResource < Products::BaseResource
+    #     def resource_scope
+    #       accessor.products
+    #     end
+    #   end
     def resource_scope
       resource_class
     end
@@ -30,6 +40,13 @@ module Cyrax::Extensions
     end
 
     module ClassMethods
+
+      # Class method for setting all the attributes that you want to access in the resource
+      #
+      # @example
+      #   accessible_attributes :description, :model, :price_in_cents, :vendor
+      #
+      # @param attrs [Array(Symbol)] Symbols of the attributes
       def accessible_attributes(*attrs)
         if attrs.blank?
           @accessible_attributes || []
@@ -39,6 +56,13 @@ module Cyrax::Extensions
         end
       end
 
+      # Class method for setting the resource that you want to access
+      #
+      # @example
+      #   resource :product
+      #
+      # @param name [Symbol] The name of the resource
+      # @param options Hash [Hash] Options
       def resource(name, options = {})
         self.resource_name = name.to_s
         self.resource_class_name = options[:class_name]
