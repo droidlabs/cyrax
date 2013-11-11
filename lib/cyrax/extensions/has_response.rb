@@ -46,7 +46,7 @@ module Cyrax::Extensions
       if respond_to?(:decorable?) && decorable?
         options = {decorator: decorator_class}.merge(options)
       end
-      if respond_to?(:serializable?) && serializable?
+      if respond_to?(:seializable?) && seializable?
         options = {serializer: serializer_class}.merge(options)
       end
       result = Cyrax::Presenter.present(result, options)
