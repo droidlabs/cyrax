@@ -96,10 +96,10 @@ module Cyrax::Extensions
 
     # Returns a collection of the resource we are calling.
     #
-    # If you want your resource to return something interesting, you should override the resource_scope method. Otherwise by default it will return the constantized model name.
+    # If you want your resource to return something interesting, you should override the resource_scope method.
+    # Otherwise by default it will return the constantized model name and it will call .all on it during presentation.
     #
     # @return [type] The collection
-    # @todo Refactor this? It just returns the constantized class. Confusing as all hell.
     def build_collection
       resource_scope
     end
