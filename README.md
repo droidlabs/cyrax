@@ -25,3 +25,9 @@ Look at `example` folder.
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Thanks for using Cyrax!
+
+Hope, you'll enjoy Cyrax!
+
+Cheers, [Droid Labs](http://droidlabs.pro).
