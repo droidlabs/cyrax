@@ -36,6 +36,9 @@ module Cyrax::Extensions
       self.class.name.demodulize.underscore
     end
 
+    # Generates the response for to pass to the Rails controller
+    # @param result The data you want to respond with - can be an Active Record Relation, the class of the Model itself (e.g. Product)
+    # @param options [Hash] Options
     def respond_with(result, options = {})
       options[:as] ||= accessor
       name = options[:name] || response_name

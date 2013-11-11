@@ -5,6 +5,14 @@ class Cyrax::Base
 
   attr_accessor :params, :accessor
 
+  # Creates a new Cyrax resource
+  #
+  # @param options [Hash] Options to pass in. You need `:as` and `:params`
+  #   :as defines the accessor
+  #   :params are parameters passed by the controller usually
+  #
+  # @example Instantiating a new resource
+  #     Products::UserResource.new(as: current_user, params: params)
   def initialize(options = {})
     @accessor = options[:as]
     @params = options[:params]
