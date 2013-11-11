@@ -3,7 +3,7 @@ module Cyrax::Extensions
     extend ActiveSupport::Concern
 
     # Builds and returns a collection response for Rails
-    # @return [Cyrax::Response] Response for Rails controller
+    # @return [Cyrax::Response] response
     def collection
       respond_with build_collection, name: collection_name, present: :collection
     end
@@ -11,11 +11,18 @@ module Cyrax::Extensions
     alias_method :read_all, :collection
     alias_method :read_all!, :collection
 
+    # Builds a new resource without saving to DB
+    # Runs Model.new (before saving)
+    # Used for :new action in controller
+    # @return [Cyrax::Response] response
     def build
       respond_with build_resource(nil)
     end
     alias_method :build!, :build
 
+    # Creates a new resource and persists to DB
+    # Used for :create action in controller
+    # @return [Cyrax::Response] response
     def create(custom_attributes = nil, &block)
       resource = build_resource(nil, custom_attributes||resource_attributes)
       transaction do
@@ -34,6 +41,9 @@ module Cyrax::Extensions
     end
     alias_method :create!, :create
 
+    # Reads a single item from the DB
+    # Used for :show action in controller
+    # @return [Cyrax::Response] response
     def read
       respond_with find_resource(params[:id])
     end
@@ -41,7 +51,9 @@ module Cyrax::Extensions
     alias_method :edit, :read
     alias_method :edit!, :read
 
-
+    # Updates a single item and persists to DB
+    # Used for :update action in controller
+    # @return [Cyrax::Response] response
     def update(custom_attributes = nil, &block)
       resource = build_resource(params[:id], custom_attributes||resource_attributes)
       transaction do
@@ -60,6 +72,9 @@ module Cyrax::Extensions
     end
     alias_method :update!, :update
 
+    # Destroys a resource from the DB
+    # Used for :destroy action in controller
+    # @return [Cyrax::Response] response
     def destroy(&block)
       resource = find_resource(params[:id])
       transaction do
@@ -72,10 +87,17 @@ module Cyrax::Extensions
     end
     alias_method :destroy!, :destroy
 
+    # Finds and returns a single item from the DB
+    # @param id [int] ID of item
+    # @return [object] The object
     def find_resource(id)
       resource_scope.find(id)
     end
 
+    # Instantiates the resource
+    # @param id [int] ID or nil if you want a new object
+    # @param attributes [hash] Attributes you want to add to the resource
+    # @return [object] The object
     def build_resource(id, attributes = {})
       if id.present?
         resource = find_resource(id)
@@ -86,10 +108,15 @@ module Cyrax::Extensions
       end
     end
 
+    # Saves a resource
+    # @param resource [object] The resource to save
     def save_resource(resource)
       resource.save
     end
 
+    # Remove a resource
+    # Calls destroy method on resource
+    # @param resource [object] The resource to destroy
     def delete_resource(resource)
       resource.destroy
     end
