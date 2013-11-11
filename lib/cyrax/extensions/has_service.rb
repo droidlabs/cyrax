@@ -2,6 +2,8 @@ module Cyrax::Extensions
   module HasService
     extend ActiveSupport::Concern
 
+    # Builds and returns a collection response for Rails
+    # @return [Cyrax::Response] Response for Rails controller
     def collection
       respond_with build_collection, name: collection_name, present: :collection
     end
@@ -92,6 +94,12 @@ module Cyrax::Extensions
       resource.destroy
     end
 
+    # Returns a collection of the resource we are calling.
+    #
+    # If you want your resource to return something interesting, you should override the resource_scope method. Otherwise by default it will return the constantized model name.
+    #
+    # @return [type] The collection
+    # @todo Refactor this? It just returns the constantized class. Confusing as all hell.
     def build_collection
       resource_scope
     end

@@ -19,7 +19,7 @@ module Cyrax::Extensions
     end
 
     # Returns the resource class - e.g. Product
-    # You can override this in your resource by defining the method and returning your own scope
+    # If you want your resource to return something interesting, you should override this in your resource by defining the method and returning your own scope
     #
     # @example Overriding resource_scope
     #   class Products::UserResource < Products::BaseResource
