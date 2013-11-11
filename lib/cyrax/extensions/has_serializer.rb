@@ -6,7 +6,7 @@ module Cyrax::Extensions
       class_attribute :serializer_class_name
     end
 
-    def seializable?
+    def serializable?
       !self.class.serializer_class_name.nil?
     end
 
