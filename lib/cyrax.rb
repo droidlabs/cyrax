@@ -19,7 +19,7 @@ require "cyrax/decorator.rb"
 require "cyrax/serializer.rb"
 
 module Cyrax
-  @@strong_parameters = false
+  @@strong_parameters = true
 
   def self.strong_parameters
     @@strong_parameters
