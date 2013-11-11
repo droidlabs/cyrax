@@ -6,12 +6,16 @@ module Cyrax::Extensions
       class_attribute :serializer_class_name
     end
 
+    def serializer_class_name
+      options[:serializer] || self.class.serializer_class_name
+    end
+
     def serializable?
-      !self.class.serializer_class_name.nil?
+      !serializer_class_name.nil?
     end
 
     def serializer_class
-      self.class.serializer_class_name.to_s.classify.constantize
+      serializer_class_name.to_s.classify.constantize
     end
 
     module ClassMethods

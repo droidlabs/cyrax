@@ -12,5 +12,6 @@
 * Add parameters filtering (or resource builder)
 
 == 0.6.0
+* Support assignments in serializer
 * Add resource authorization
 * Add resource response message translations support

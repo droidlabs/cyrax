@@ -32,7 +32,9 @@ class ProductsController < ApplicationController
 
   private
 
-  def resource
-    @resource ||= Products::UserResource.new(as: current_user, params: params)
-  end
+    def resource
+      @resource ||= Products::UserResource.new(as: current_user, params: params)
+      # you can pass decorator or serializer to override default value
+      # @resource ||= Products::UserResource.new(as: current_user, params: params, decorator: CustomDecorator)
+    end
 end

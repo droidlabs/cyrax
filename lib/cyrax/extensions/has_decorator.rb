@@ -6,12 +6,16 @@ module Cyrax::Extensions
       class_attribute :decorator_class_name
     end
 
+    def decorator_class_name
+      options[:decorator] || self.class.decorator_class_name
+    end
+
     def decorable?
-      !self.class.decorator_class_name.nil?
+      !decorator_class_name.nil?
     end
 
     def decorator_class
-      self.class.decorator_class_name.to_s.classify.constantize
+      decorator_class_name.to_s.classify.constantize
     end
 
     module ClassMethods
