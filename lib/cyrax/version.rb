@@ -1,3 +1,3 @@
 module Cyrax
-  VERSION = "0.4.0.beta"
+  VERSION = "0.4.0.beta2"
 end
