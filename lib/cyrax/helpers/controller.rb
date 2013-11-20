@@ -2,19 +2,22 @@ module Cyrax::ControllerHelper
   def respond_with(*args)
     if args.present? && args.first.is_a?(Cyrax::Response)
       response, options = *args
-      default_options = {
+      options = {
         notice: response.notice,
         error: response.error
-      }
+      }.merge(options || {})
+
       set_resource_from(response)
-      flash[:notice] = response.notice if response.notice.present?
-      flash[:error] = response.error if response.error.present?
+      
+      # set flashes
+      flash[:notice] = options[:notice] if options[:notice].present?
+      flash[:error] = options[:error] if options[:error].present?
 
       # convert result to model if possible
       result = response.result
       result = result.to_model if result.respond_to?(:to_model)
 
-      super(result, default_options.merge(options || {})) do |format|
+      super(result, options) do |format|
         format.json do
           if result.respond_to?(:errors) && result.errors.present?
             render json: { errors: result.errors }
