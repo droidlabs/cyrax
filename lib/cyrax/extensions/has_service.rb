@@ -44,8 +44,10 @@ module Cyrax::Extensions
     # Reads a single item from the DB
     # Used for :show action in controller
     # @return [Cyrax::Response] response
-    def read
-      respond_with find_resource(params[:id])
+    def read(&block)
+      resource = find_resource(params[:id])
+      block.call(resource) if block_given?
+      respond_with resource
     end
     alias_method :read!, :read
     alias_method :edit, :read
