@@ -6,13 +6,15 @@ Cyrax is microframework to build layered architecture, one of the core concepts 
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your Gemfile.
 
-    gem 'cyrax'
+Rails 4:
 
-And then execute:
+    gem 'cyrax', '~> 0.4.0'
 
-    $ bundle
+Rails 3:
+
+    gem 'cyrax', '~> 0.3.8'
 
 ## Usage
 
