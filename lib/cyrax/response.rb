@@ -1,5 +1,5 @@
 class Cyrax::Response
-  attr_accessor :message, :errors, :assignments, 
+  attr_accessor :message, :errors, :status, :assignments, 
     :result, :resource_name, :options
 
   def initialize(resource_name, result, options = {})
@@ -9,6 +9,7 @@ class Cyrax::Response
     @message = nil
     @errors = {}
     @assignments = {}
+    @status = nil
   end
 
   def with_errors(errors)

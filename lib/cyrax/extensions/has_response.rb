@@ -1,6 +1,12 @@
 module Cyrax::Extensions
   module HasResponse
     extend ActiveSupport::Concern
+    STATUS_VALUES = {
+      created: 201,
+      no_content: 204,
+      bad_request: 400,
+      not_allowed: 403
+    }
 
     def add_error(key, value)
       if value.blank?
@@ -44,6 +50,13 @@ module Cyrax::Extensions
       @_message = message
     end
 
+    def set_status(status)
+      if status.is_a?(Symbol)
+        status = STATUS_VALUES[status]
+      end
+      @_status = status
+    end
+
     def response_name
       self.class.name.demodulize.underscore
     end
@@ -69,6 +82,7 @@ module Cyrax::Extensions
       response.message = @_message
       response.errors = @_errors
       response.assignments = @_assignments
+      response.status = @_status
       response
     end
   end

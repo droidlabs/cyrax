@@ -73,6 +73,7 @@ module Cyrax
         response.should_receive(:message=)
         response.should_receive(:errors=)
         response.should_receive(:assignments=)
+        response.should_receive(:status=)
         subject.respond_with('bar')
       end
     end
