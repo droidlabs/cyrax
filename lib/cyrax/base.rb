@@ -17,7 +17,16 @@ class Cyrax::Base
   #     Products::UserResource.new(as: current_user, params: params)
   def initialize(options = {})
     @accessor = options[:as]
-    @params = options[:params]
+    @params = wrap_params(options[:params])
     @options = options
+  end
+
+  def wrap_params(params)
+    if Cyrax.strong_parameters && defined?(ActionController) &&
+      !params.is_a?(ActionController::Parameters)
+      ActionController::Parameters.new(params)
+    else
+      params
+    end
   end
 end

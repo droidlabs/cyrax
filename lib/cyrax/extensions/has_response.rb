@@ -8,7 +8,7 @@ module Cyrax::Extensions
       not_allowed: 403
     }
 
-    def add_error(key, value)
+    def add_error(key, value = nil)
       if value.blank?
         raise "Use key-value syntax for adding errors"
       end
