@@ -21,7 +21,6 @@ module Cyrax
         it{ should respond_to(:add_error) }
         it{ should respond_to(:add_error_unless) }
         it{ should respond_to(:add_errors_from) }
-        it{ should respond_to(:invoke_callback) }
       end
     end
 
@@ -77,12 +76,6 @@ module Cyrax
         resource.should_receive(:destroy)
         subject.destroy
       end
-
-      it 'invokes callbacks' do
-        subject.should_receive(:invoke_callback).with(:before_destroy, resource)
-        subject.should_receive(:invoke_callback).with(:after_destroy, resource)
-        subject.destroy
-      end
     end
 
     describe '#create' do
@@ -97,14 +90,6 @@ module Cyrax
       context 'when resource successfully saved' do
         before { resource.stub(:save).and_return(true) }
 
-        it 'invokes callbacks' do
-          subject.should_receive(:invoke_callback).with(:before_save, resource)
-          subject.should_receive(:invoke_callback).with(:before_create, resource)
-          subject.should_receive(:invoke_callback).with(:after_save, resource)
-          subject.should_receive(:invoke_callback).with(:after_create, resource)
-          subject.create(params)
-        end
-
         it 'sets message' do
           subject.should_receive(:set_message).with('Foo successfully created')
           subject.create(params)
@@ -113,14 +98,6 @@ module Cyrax
 
       context 'when resource could not be saved' do
         before { resource.stub(:save).and_return(false) }
-
-        it 'invokes callbacks' do
-          subject.should_receive(:invoke_callback).with(:before_save, resource)
-          subject.should_receive(:invoke_callback).with(:before_create, resource)
-          subject.should_not_receive(:invoke_callback).with(:after_save, resource)
-          subject.should_not_receive(:invoke_callback).with(:after_create, resource)
-          subject.create(params)
-        end
 
         it 'sets error messages' do
           subject.should_receive(:add_errors_from).with(resource)
@@ -141,14 +118,6 @@ module Cyrax
       context 'when resource successfully saved' do
         before { resource.stub(:save).and_return(true) }
 
-        it 'invokes callbacks' do
-          subject.should_receive(:invoke_callback).with(:before_save, resource)
-          subject.should_receive(:invoke_callback).with(:before_update, resource)
-          subject.should_receive(:invoke_callback).with(:after_save, resource)
-          subject.should_receive(:invoke_callback).with(:after_update, resource)
-          subject.update(params)
-        end
-
         it 'sets message' do
           subject.should_receive(:set_message).with('Foo successfully updated')
           subject.update(params)
@@ -157,14 +126,6 @@ module Cyrax
 
       context 'when resource could not be saved' do
         before { resource.stub(:save).and_return(false) }
-
-        it 'invokes callbacks' do
-          subject.should_receive(:invoke_callback).with(:before_save, resource)
-          subject.should_receive(:invoke_callback).with(:before_update, resource)
-          subject.should_not_receive(:invoke_callback).with(:after_save, resource)
-          subject.should_not_receive(:invoke_callback).with(:after_update, resource)
-          subject.update(params)
-        end
 
         it 'sets error messages' do
           subject.should_receive(:add_errors_from).with(resource)

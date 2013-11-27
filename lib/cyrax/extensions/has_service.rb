@@ -26,11 +26,7 @@ module Cyrax::Extensions
     def create(custom_attributes = nil, &block)
       resource = build_resource(nil, custom_attributes||resource_attributes)
       transaction do
-        invoke_callback(:before_create, resource)
-        invoke_callback(:before_save, resource)
         if save_resource(resource)
-          invoke_callback(:after_create, resource)
-          invoke_callback(:after_save, resource)
           set_message("#{resource_name.titleize} successfully created")
           block.call(resource) if block_given?
         else
@@ -59,11 +55,7 @@ module Cyrax::Extensions
     def update(custom_attributes = nil, &block)
       resource = build_resource(params[:id], custom_attributes||resource_attributes)
       transaction do
-        invoke_callback(:before_update, resource)
-        invoke_callback(:before_save, resource)
         if save_resource(resource)
-          invoke_callback(:after_update, resource)
-          invoke_callback(:after_save, resource)
           set_message("#{resource_name.titleize} successfully updated")
           block.call(resource) if block_given?
         else
@@ -80,9 +72,7 @@ module Cyrax::Extensions
     def destroy(&block)
       resource = find_resource(params[:id])
       transaction do
-        invoke_callback(:before_destroy, resource)
         delete_resource(resource)
-        invoke_callback(:after_destroy, resource)
         block.call(resource) if block_given?
       end
       respond_with(resource)
