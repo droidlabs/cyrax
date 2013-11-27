@@ -1,3 +1,8 @@
+== 0.4.0
+* Cyrax.strong_parameters = true by default
+* One syntax for all injected classes, e.g. decorators, presenters, etc
+* Added dependency injection on resource initialization
+
 == 0.3.8
 * Added relation serialization to Cyrax::Serializer
 * Added some documentation
