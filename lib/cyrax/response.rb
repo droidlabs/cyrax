@@ -42,7 +42,9 @@ class Cyrax::Response
   end
 
   def as_json(*args)
-    if options[:serializer]
+    if failure?
+      {errors: @errors}
+    elsif options[:serializer]
       options[:serializer].new(result).serialize
     else
       result.as_json

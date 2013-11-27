@@ -30,4 +30,25 @@ describe Api::ProductsController do
       user_attrs.has_key?('updated_at').should be_false
     end
   end
+
+  describe 'POST #create' do
+    let(:attributes) { {vendor: 'some vendor', price_in_cents: 100} }
+    before { post :create, product: attributes, format: :json }
+
+    context "on success" do
+      it "should return product in json" do
+        json = JSON.parse(response.body)
+        json['vendor'].should == attributes[:vendor]
+        json['vendor'].should_not be_nil
+      end
+    end
+
+    context "on error" do
+      let(:attributes) { {vendor: nil, price_in_cents: 100} }
+      it "should return errors in json" do
+        json = JSON.parse(response.body)
+        json['errors'].should_not be_nil
+      end
+    end
+  end
 end

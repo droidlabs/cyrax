@@ -29,8 +29,6 @@ module Cyrax::Extensions
         if save_resource(resource)
           set_message("#{resource_name.titleize} successfully created")
           block.call(resource) if block_given?
-        else
-          add_errors_from(resource)
         end
       end
       respond_with(resource)
@@ -58,8 +56,6 @@ module Cyrax::Extensions
         if save_resource(resource)
           set_message("#{resource_name.titleize} successfully updated")
           block.call(resource) if block_given?
-        else
-          add_errors_from(resource)
         end
       end
       respond_with(resource)

@@ -7,23 +7,20 @@ module Cyrax::ControllerHelper
         error: response.error
       }.merge(options || {})
 
-      set_resource_from(response)
-      
-      # set flashes
-      flash[:notice] = options[:notice] if options[:notice].present?
-      flash[:error] = options[:error] if options[:error].present?
-
       # convert result to model if possible
       result = response.result
       result = result.to_model if result.respond_to?(:to_model)
 
       super(result, options) do |format|
         format.json do
-          if result.respond_to?(:errors) && result.errors.present?
-            render json: { errors: result.errors }
-          else
-            render json: response.as_json
-          end
+          render json: response.as_json
+        end
+        format.html do
+          # set flashes
+          flash[:notice] = options[:notice] if options[:notice].present?
+          flash[:error] = options[:error] if options[:error].present?
+          set_resource_from(response)
+          render
         end
       end
     else

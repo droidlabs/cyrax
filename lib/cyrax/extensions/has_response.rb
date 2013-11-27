@@ -28,6 +28,16 @@ module Cyrax::Extensions
       end
     end
 
+    def add_errors_from?(model)
+      model = model.to_model if model.respond_to?(:to_model)
+      model && model.respond_to?(:errors) && 
+      model.errors.respond_to?(:messages)
+    end
+
+    def reset_errors
+      @_errors = []
+    end
+
     def set_message(message)
       @_message = message
     end
@@ -43,6 +53,9 @@ module Cyrax::Extensions
       options[:as] ||= accessor
       name = options[:name] || response_name
       result = result.result.to_model if result.is_a?(Cyrax::Response)
+      if add_errors_from?(result)
+        add_errors_from(result)
+      end
       if respond_to?(:decorable?) && decorable?
         options = {decorator: decorator_class}.merge(options)
       end
