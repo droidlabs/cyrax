@@ -1,3 +1,10 @@
+== 0.5.0
+* BREAKING CHANGE: Add model errors to response by default
+* BREAKING CHANGE: Response errors are always key-value hash now
+* Removed callbacks
+* Removed BaseResource class change deprecation
+* Removed DecoratedCollectionPresenter class change deprecation
+
 == 0.4.0
 * Cyrax.strong_parameters = true by default
 * One syntax for all injected classes, e.g. decorators, presenters, etc
