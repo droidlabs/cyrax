@@ -2,9 +2,12 @@ module Cyrax::Extensions
   module HasResponse
     extend ActiveSupport::Concern
 
-    def add_error(error)
-      @_errors ||= []
-      @_errors << error
+    def add_error(key, value)
+      if value.blank?
+        raise "Use key-value syntax for adding errors"
+      end
+      @_errors ||= {}
+      @_errors[key.to_sym] = value
     end
 
     def assign_resource(resource_name, resource, options = {})
@@ -15,15 +18,14 @@ module Cyrax::Extensions
       @_assignments[resource_name.to_sym] = resource
     end
 
-    def add_error_unless(error, condition)
-      add_error(error) unless condition
+    def add_error_unless(key, value, condition)
+      add_error(key, value) unless condition
     end
 
     def add_errors_from(model)
-      @_errors ||= []
       if model && model.errors.messages.present?
         model.errors.messages.each do |key, value|
-          add_error "#{key}: #{value}"
+          add_error key, value
         end
       end
     end
@@ -35,7 +37,7 @@ module Cyrax::Extensions
     end
 
     def reset_errors
-      @_errors = []
+      @_errors = {}
     end
 
     def set_message(message)

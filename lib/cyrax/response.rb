@@ -7,7 +7,7 @@ class Cyrax::Response
     @result = result
     @options = options
     @message = nil
-    @errors = []
+    @errors = {}
     @assignments = {}
   end
 
@@ -33,12 +33,18 @@ class Cyrax::Response
     message if success?
   end
 
+  def error_messages
+    errors.map do |key, value|
+      "#{key}: #{value}"
+    end
+  end
+
   def error
-    message || errors.first if failure?
+    message || error_messages.first if failure?
   end
 
   def has_error?(error)
-    errors && errors.include?(error)
+    errors && errors.has_key?(error)
   end
 
   def as_json(*args)

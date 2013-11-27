@@ -12,27 +12,27 @@ module Cyrax
     end
 
     describe '#with_errors' do
-      before { subject.with_errors(['some', 'errors']) }
+      before { subject.with_errors({foo: 'some', bar: 'errors'}) }
       it { should be_kind_of(Cyrax::Response) }
       its(:errors) { should be }
-      its(:errors) { should eq(['some', 'errors']) }
+      its(:errors) { should eq({foo: 'some', bar: 'errors'}) }
     end
 
     describe '#success?' do
       context 'when there are no errors' do
-        before { subject.with_errors([]) }
+        before { subject.with_errors({}) }
         its(:success?) { should be_true }
       end
 
       context 'when there are errors' do
-        before { subject.with_errors(['some', 'errors']) }
+        before { subject.with_errors({foo: 'some', bar: 'errors'}) }
         its(:success?) { should be_false }
       end
     end
 
     describe '#failure?' do
       context 'when there are no errors' do
-        before { subject.with_errors([]) }
+        before { subject.with_errors({}) }
         its(:failure?) { should be_false }
       end
 
@@ -51,7 +51,7 @@ module Cyrax
       end
 
       context 'when there are errors' do
-        before { subject.with_errors(['some', 'errors']) }
+        before { subject.with_errors({foo: 'some', bar: 'errors'}) }
         its(:notice) { should be_nil }
       end
     end
@@ -63,13 +63,13 @@ module Cyrax
       end
 
       context 'when there are errors' do
-        before { subject.with_errors(['some', 'message']) }
+        before { subject.with_errors({foo: 'some', bar: 'errors'}) }
         its(:error) { should be }
-        its(:error) { should eq('some') }
+        its(:error) { should eq('foo: some') }
       end
 
       context 'when message is present' do
-        before { subject.with_message('some message').with_errors(['some', 'message']) }
+        before { subject.with_message('some message').with_errors({foo: 'some', bar: 'errors'}) }
         its(:error) { should be }
         its(:error) { should eq('some message') }
       end
@@ -77,14 +77,14 @@ module Cyrax
 
     describe '#has_error?' do
       context 'when there are no errors' do
-        before { subject.with_errors([]) }
-        specify { subject.has_error?('foo').should be_false }
+        before { subject.with_errors({}) }
+        specify { subject.has_error?(:foo).should be_false }
       end
 
       context 'when there are errors' do
-        before { subject.with_errors(['some', 'message']) }
-        specify { subject.has_error?('some').should be_true }
-        specify { subject.has_error?('foo').should be_false }
+        before { subject.with_errors({foo: 'some', bar: 'errors'}) }
+        specify { subject.has_error?(:foo).should be_true }
+        specify { subject.has_error?(:foo1).should be_false }
       end
     end
 

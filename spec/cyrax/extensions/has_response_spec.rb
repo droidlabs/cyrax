@@ -21,19 +21,19 @@ module Cyrax
 
     describe '#add_error' do
       it 'should add error' do
-        subject.add_error('foo')
-        subject.instance_variable_get(:@_errors).should include('foo')
+        subject.add_error(:foo, 'bar')
+        subject.instance_variable_get(:@_errors).has_key?(:foo).should be_true
       end
     end
 
     describe '#add_error_unless' do
       it 'should add error when condition false' do
-        subject.add_error_unless('foo', 1==0)
-        subject.instance_variable_get(:@_errors).should include('foo')
+        subject.add_error_unless(:foo, 'bar', 1==0)
+        subject.instance_variable_get(:@_errors).has_key?(:foo).should be_true
       end
 
       it 'should not add error when condition true' do
-        subject.add_error_unless('foo', 1==1)
+        subject.add_error_unless(:foo, 'bar', 1==1)
         subject.instance_variable_get(:@_errors).should be_nil
       end
     end
@@ -45,7 +45,7 @@ module Cyrax
 
       it 'should add errors from model error messages' do
         subject.add_errors_from(model)
-        subject.instance_variable_get(:@_errors).should eq(['foo: bar', 'bar: bazz'])
+        subject.instance_variable_get(:@_errors).should eq({foo: 'bar', bar: 'bazz'})
       end
     end
 
