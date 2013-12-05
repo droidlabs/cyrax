@@ -27,7 +27,7 @@ module Cyrax::Extensions
       resource = build_resource(nil, custom_attributes||resource_attributes)
       transaction do
         if save_resource(resource)
-          set_message("#{resource_name.titleize} successfully created")
+          set_message(:created)
           block.call(resource) if block_given?
         end
       end
@@ -54,7 +54,7 @@ module Cyrax::Extensions
       resource = build_resource(params[:id], custom_attributes||resource_attributes)
       transaction do
         if save_resource(resource)
-          set_message("#{resource_name.titleize} successfully updated")
+          set_message(:updated)
           block.call(resource) if block_given?
         end
       end

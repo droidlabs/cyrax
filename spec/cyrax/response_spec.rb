@@ -65,7 +65,7 @@ module Cyrax
       context 'when there are errors' do
         before { subject.with_errors({foo: 'some', bar: 'errors'}) }
         its(:error) { should be }
-        its(:error) { should eq('foo: some') }
+        its(:error) { should eq('There was appeared some errors.') }
       end
 
       context 'when message is present' do

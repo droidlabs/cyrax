@@ -15,7 +15,7 @@ module Cyrax::ControllerHelper
       result = result.to_model if result.respond_to?(:to_model)
 
       respond_to do |format|
-        format.html do
+        format.any do
           # set flashes
           if response.success?
             flash[:notice] = options[:notice] if options[:notice].present?

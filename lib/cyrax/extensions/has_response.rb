@@ -47,7 +47,12 @@ module Cyrax::Extensions
     end
 
     def set_message(message)
-      @_message = message
+      if message.is_a?(Symbol)
+        service_name = self.class.name.demodulize.underscore
+        @_message = I18n.t("cyrax.#{service_name}.#{message}", default: "#{response_name.titleize} successfully #{message}")
+      else
+        @_message = message
+      end
     end
 
     def set_status(status)

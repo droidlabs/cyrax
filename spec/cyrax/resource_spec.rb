@@ -91,7 +91,7 @@ module Cyrax
         before { resource.stub(:save).and_return(true) }
 
         it 'sets message' do
-          subject.should_receive(:set_message).with('Foo successfully created')
+          subject.should_receive(:set_message).with(:created)
           subject.create(params)
         end
       end
@@ -119,7 +119,7 @@ module Cyrax
         before { resource.stub(:save).and_return(true) }
 
         it 'sets message' do
-          subject.should_receive(:set_message).with('Foo successfully updated')
+          subject.should_receive(:set_message).with(:updated)
           subject.update(params)
         end
       end
