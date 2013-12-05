@@ -1,5 +1,5 @@
 module Cyrax::ControllerHelper
-  def respond_with(*args)
+  def respond_with(*args, &block)
     if args.present? && args.first.is_a?(Cyrax::Response)
       response, options = *args
       options = {
@@ -14,12 +14,18 @@ module Cyrax::ControllerHelper
       result = response.result
       result = result.to_model if result.respond_to?(:to_model)
 
-      # set flashes
-      flash[:notice] = options[:notice] if options[:notice].present?
-      flash[:error] = options[:error] if options[:error].present?
-      set_resource_from(response)
-
-      super(result, options) do |format|
+      respond_to do |format|
+        format.html do
+          # set flashes
+          if response.success?
+            flash[:notice] = options[:notice] if options[:notice].present?
+          else
+            flash.now[:notice] = options[:notice] if options[:notice].present?
+            flash.now[:error] = options[:error] if options[:error].present?
+          end
+          set_resource_from(response)
+          super(result, options, &block)
+        end
         format.json do
           render json: response.as_json
         end

@@ -41,7 +41,9 @@ class Cyrax::Response
   end
 
   def error
-    message || error_messages.first if failure?
+    if failure?
+      message || I18n.t("cyrax.errors.default", default: "There was appeared some errors.")
+    end
   end
 
   def has_error?(error)
