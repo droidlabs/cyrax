@@ -1,6 +1,6 @@
 class Cyrax::Response
   attr_accessor :message, :errors, :status, :assignments, 
-    :result, :resource_name, :options
+    :result, :resource_name, :options, :accessor
 
   def initialize(resource_name, result, options = {})
     @resource_name = resource_name
@@ -10,6 +10,7 @@ class Cyrax::Response
     @errors = {}
     @assignments = {}
     @status = nil
+    @accessor = options[:as]
   end
 
   def with_errors(errors)
@@ -54,7 +55,7 @@ class Cyrax::Response
     if failure?
       {errors: @errors}
     elsif options[:serializer]
-      options[:serializer].new(result).serialize
+      options[:serializer].new(result, as: accessor).serialize
     else
       result.as_json
     end
