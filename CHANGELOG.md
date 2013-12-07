@@ -1,3 +1,7 @@
+== 0.5.2
+* BREAKING CHANGE: removed `collection` method in resource. please always use `read_all`
+* Added simple authorization helper
+
 == 0.5.1
 * BREAKING CHANGE: add_errors_from changed to sync_errors_with
 * Added localization for service methods

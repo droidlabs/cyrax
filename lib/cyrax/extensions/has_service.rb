@@ -4,19 +4,24 @@ module Cyrax::Extensions
 
     # Builds and returns a collection response for Rails
     # @return [Cyrax::Response] response
-    def collection
-      respond_with build_collection, name: collection_name, present: :collection
+    def read_all(&block)
+      authorize_resource!(:read_all, resource_class)
+      collection = build_collection
+      block.call(collection) if block_given?
+      respond_with collection, name: collection_name, present: :collection
     end
     # Overrides collection with read_all
-    alias_method :read_all, :collection
-    alias_method :read_all!, :collection
+    alias_method :read_all!, :read_all
 
     # Builds a new resource without saving to DB
     # Runs Model.new (before saving)
     # Used for :new action in controller
     # @return [Cyrax::Response] response
-    def build
-      respond_with build_resource(nil)
+    def build(&block)
+      resource = build_resource(nil)
+      authorize_resource!(:build, resource)
+      block.call(resource) if block_given?
+      respond_with resource
     end
     alias_method :build!, :build
 
@@ -25,6 +30,7 @@ module Cyrax::Extensions
     # @return [Cyrax::Response] response
     def create(custom_attributes = nil, &block)
       resource = build_resource(nil, custom_attributes||resource_attributes)
+      authorize_resource!(:create, resource)
       transaction do
         if save_resource(resource)
           set_message(:created)
@@ -52,6 +58,7 @@ module Cyrax::Extensions
     # @return [Cyrax::Response] response
     def update(custom_attributes = nil, &block)
       resource = build_resource(resource_params_id, custom_attributes||resource_attributes)
+      authorize_resource!(:update, resource)
       transaction do
         if save_resource(resource)
           set_message(:updated)
@@ -67,6 +74,7 @@ module Cyrax::Extensions
     # @return [Cyrax::Response] response
     def destroy(&block)
       resource = find_resource(resource_params_id)
+      authorize_resource!(:destroy, resource)
       transaction do
         delete_resource(resource)
         block.call(resource) if block_given?
@@ -107,6 +115,15 @@ module Cyrax::Extensions
     # @param resource [object] The resource to destroy
     def delete_resource(resource)
       resource.destroy
+    end
+
+    # Authorize a resource
+    # Should be called on each service method and should be implemented on each resource.
+    # Implementation may raise an exception which may be handled by controller.
+    # @param action [Symbol] The action to authorize
+    # @param resource [object] The resource to authorize
+    def authorize_resource!(action, resource)
+      # raise AuthorizationError
     end
 
     # Returns a collection of the resource we are calling.
