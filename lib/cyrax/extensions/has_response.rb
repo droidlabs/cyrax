@@ -35,10 +35,12 @@ module Cyrax::Extensions
 
     def sync_errors_with(model)
       model = model.to_model if model.respond_to?(:to_model)
-      if model && model.errors.messages.present?
-        (@_errors || {}).each do |key, value|
-          model.errors.add key, value unless model.errors.include?(key)
-        end
+      return unless model
+      (@_errors || {}).each do |key, value|
+        next unless model.respond_to?(key)
+        model.errors.add key, value unless model.errors.include?(key)
+      end
+      if model.errors.messages.present?
         model.errors.messages.each do |key, value|
           add_error key, value
         end
