@@ -8,14 +8,6 @@ module Cyrax::Extensions
       not_allowed: 403
     }
 
-    def add_error(key, value = nil)
-      if value.blank?
-        raise "Use key-value syntax for adding errors"
-      end
-      @_errors ||= {}
-      @_errors[key.to_sym] = value
-    end
-
     def assign_resource(resource_name, resource, options = {})
       if options[:decorator]
         resource = Cyrax::Presenter.present(resource, options)
@@ -29,19 +21,31 @@ module Cyrax::Extensions
       @_assignments[resource_name]
     end
 
+    def add_error(key, value = nil)
+      if value.blank?
+        raise "Use key-value syntax for adding errors"
+      end
+      @_errors ||= {}
+      @_errors[key.to_sym] = value
+    end
+
     def add_error_unless(key, value, condition)
       add_error(key, value) unless condition
     end
 
-    def add_errors_from(model)
+    def sync_errors_with(model)
+      model = model.to_model if model.respond_to?(:to_model)
       if model && model.errors.messages.present?
+        (@_errors || {}).each do |key, value|
+          model.errors.add key, value unless model.errors.include?(key)
+        end
         model.errors.messages.each do |key, value|
           add_error key, value
         end
       end
     end
 
-    def add_errors_from?(model)
+    def sync_errors_with?(model)
       model = model.to_model if model.respond_to?(:to_model)
       model && model.respond_to?(:errors) &&
       model.errors.respond_to?(:messages)
@@ -78,8 +82,8 @@ module Cyrax::Extensions
       options[:as] ||= accessor
       name = options[:name] || response_name
       result = result.result.to_model if result.is_a?(Cyrax::Response)
-      if add_errors_from?(result)
-        add_errors_from(result)
+      if sync_errors_with?(result)
+        sync_errors_with(result)
       end
       if respond_to?(:decorable?) && decorable?
         options = {decorator: decorator_class}.merge(options)

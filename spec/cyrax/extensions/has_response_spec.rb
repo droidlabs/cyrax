@@ -38,13 +38,13 @@ module Cyrax
       end
     end
 
-    describe '#add_errors_from' do
+    describe '#sync_errors_with' do
       let(:messages) { [[:foo, 'bar'], [:bar, 'bazz']]}
       let(:errors) { double(messages: messages)}
       let(:model) { double(errors: errors) }
 
       it 'should add errors from model error messages' do
-        subject.add_errors_from(model)
+        subject.sync_errors_with(model)
         subject.instance_variable_get(:@_errors).should eq({foo: 'bar', bar: 'bazz'})
       end
     end

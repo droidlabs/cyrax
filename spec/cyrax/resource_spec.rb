@@ -20,7 +20,7 @@ module Cyrax
         it{ should respond_to(:set_message) }
         it{ should respond_to(:add_error) }
         it{ should respond_to(:add_error_unless) }
-        it{ should respond_to(:add_errors_from) }
+        it{ should respond_to(:sync_errors_with) }
       end
     end
 
@@ -99,8 +99,8 @@ module Cyrax
       context 'when resource could not be saved' do
         before { resource.stub(:save).and_return(false) }
 
-        it 'sets error messages' do
-          subject.should_receive(:add_errors_from).with(resource)
+        it 'does not set message' do
+          subject.should_not_receive(:set_message).with(:created)
           subject.create(params)
         end
       end
@@ -127,9 +127,9 @@ module Cyrax
       context 'when resource could not be saved' do
         before { resource.stub(:save).and_return(false) }
 
-        it 'sets error messages' do
-          subject.should_receive(:add_errors_from).with(resource)
-          subject.update(params)
+        it 'does not set message' do
+          subject.should_not_receive(:set_message).with(:created)
+          subject.create(params)
         end
       end
     end
