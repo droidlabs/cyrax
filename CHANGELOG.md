@@ -1,3 +1,9 @@
+== 0.5.1
+* BREAKING CHANGE: add_errors_from changed to sync_errors_with
+* Added localization for service methods
+* Added assignment helper for has_response
+* Serializer know about accessor
+
 == 0.5.0
 * BREAKING CHANGE: Add model errors to response by default
 * BREAKING CHANGE: Response errors are always key-value hash now
