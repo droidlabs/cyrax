@@ -39,7 +39,7 @@ module Cyrax::Extensions
     # Used for :show action in controller
     # @return [Cyrax::Response] response
     def read(&block)
-      resource = find_resource(params[:id])
+      resource = find_resource(resource_params_id)
       block.call(resource) if block_given?
       respond_with resource
     end
@@ -51,7 +51,7 @@ module Cyrax::Extensions
     # Used for :update action in controller
     # @return [Cyrax::Response] response
     def update(custom_attributes = nil, &block)
-      resource = build_resource(params[:id], custom_attributes||resource_attributes)
+      resource = build_resource(resource_params_id, custom_attributes||resource_attributes)
       transaction do
         if save_resource(resource)
           set_message(:updated)
@@ -66,7 +66,7 @@ module Cyrax::Extensions
     # Used for :destroy action in controller
     # @return [Cyrax::Response] response
     def destroy(&block)
-      resource = find_resource(params[:id])
+      resource = find_resource(resource_params_id)
       transaction do
         delete_resource(resource)
         block.call(resource) if block_given?
@@ -127,6 +127,10 @@ module Cyrax::Extensions
       else
         block.call
       end
+    end
+
+    def resource_params_id
+      params[:id]
     end
   end
 end
