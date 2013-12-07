@@ -24,6 +24,11 @@ module Cyrax::Extensions
       @_assignments[resource_name.to_sym] = resource
     end
 
+    def assignment(resource_name)
+      @_assignments ||= {}
+      @_assignments[resource_name]
+    end
+
     def add_error_unless(key, value, condition)
       add_error(key, value) unless condition
     end
@@ -38,7 +43,7 @@ module Cyrax::Extensions
 
     def add_errors_from?(model)
       model = model.to_model if model.respond_to?(:to_model)
-      model && model.respond_to?(:errors) && 
+      model && model.respond_to?(:errors) &&
       model.errors.respond_to?(:messages)
     end
 
