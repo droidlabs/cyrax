@@ -33,9 +33,14 @@ module Cyrax::Extensions
           self._repository_class = klass
         end
         if block_given?
+          # temporary workaround. we should not use one object hash for parent and childrens
+          if self._repository_options.present?
+            self._repository_options = self._repository_options.dup
+          end
+
           self._repository_options ||= {}
-          self._repository_options[:finder_blocks] = {}
-          self._repository_options[:finder_blocks][finder_name || :scope] = block
+          self._repository_options[:finders] = {}
+          self._repository_options[:finders][finder_name || :scope] = block
         end
       end
     end

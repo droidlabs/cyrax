@@ -4,14 +4,27 @@ class Cyrax::Repository
   attr_accessor :accessor
   attr_accessor :params
   attr_accessor :resource_class
-  attr_accessor :finder_blocks
+  attr_accessor :finders
 
   def initialize(options = {})
     @options = options
     @accessor = options[:as]
     @params = options[:params]
     @resource_class = options[:resource_class]
-    @finder_blocks = options[:finder_blocks] || {}
+    @finders = options[:finders] || {}
+  end
+
+  def finder(name, *attrs)
+    block = finders[name]
+    instance_exec(*attrs, &block)
+  end
+
+  def finder?(name)
+    finders.has_key?(name)
+  end
+
+  def finder_or_run(name, *attrs)
+    finder?(name) ? finder(name, *attrs) : send("#{name}!", *attrs)
   end
 
   # Returns the resource class - e.g. Product by default.
@@ -25,11 +38,10 @@ class Cyrax::Repository
   #     end
   #   end
   def scope
-    if block = finder_blocks[:scope]
-      instance_exec(&block)
-    else
-      resource_class
-    end
+    finder_or_run(:scope)
+  end
+  def scope!
+    resource_class
   end
 
   # Instantiates the resource
@@ -37,66 +49,60 @@ class Cyrax::Repository
   # @param attributes [hash] Attributes you want to add to the resource
   # @return [object] The object
   def build(id, attributes = {})
-    if block = finder_blocks[:build]
-      instance_exec(id, attributes, &block)
+    finder_or_run(:build, id, attributes)
+  end
+  def build!(id, attributes = {})
+    if id.present?
+      resource = find(id)
+      resource.attributes = attributes
+      resource
     else
-      if id.present?
-        resource = find(id)
-        resource.attributes = attributes
-        resource
-      else
-        scope.new(default_attributes.merge(attributes))
-      end
+      scope.new(default_attributes.merge(attributes))
     end
   end
 
   # Finds and returns a multiple items within the scope from the DB
   # @return [Array] Array of objects
   def find_all
-    if block = finder_blocks[:find_all]
-      instance_exec(&block)
-    else
-      defined?(ActiveRecord) && scope.is_a?(ActiveRecord::Relation) ? scope.load : scope.all
-    end
+    finder_or_run(:find_all)
+  end
+  def find_all!
+    defined?(ActiveRecord) && scope.is_a?(ActiveRecord::Relation) ? scope.load : scope.all
   end
 
   # Finds and returns a single item from the DB
   # @param id [int] ID of item
   # @return [object] The object
   def find(id)
-    if block = finder_blocks[:find]
-      instance_exec(id, &block)
-    else
-      scope.find(id)
-    end
+    finder_or_run(:find, id)
+  end
+  def find!(id)
+    scope.find(id)
   end
 
   # Saves a resource
   # @param resource [object] The resource to save
   def save(resource)
-    if block = finder_blocks[:save]
-      instance_exec(resource, &block)
-    else
-      resource.save
-    end
+    finder_or_run(:save, resource)
+  end
+  def save!(resource)
+    resource.save
   end
 
   # Removes a resource
   # Calls destroy method on resource
   # @param resource [object] The resource to destroy
   def delete(resource)
-    if block = finder_blocks[:delete]
-      instance_exec(resource, &block)
-    else
-      resource.destroy
-    end
+    finder_or_run(:delete, resource)
+  end
+  def delete!(resource)
+    resource.destroy
   end
 
   def default_attributes
-    if block = finder_blocks[:default_attributes]
-      instance_exec(&block)
-    else
-      {}
-    end
+    finder_or_run(:default_attributes)
+  end
+  def default_attributes!
+    {}
   end
 end
