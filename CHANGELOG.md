@@ -1,3 +1,10 @@
+== 0.6.0.beta
+* BREAKING CHANGE: build_resource, build_collection, resource_scope, find_resource, save_resource, delete_resource, default_resource_attributes methods have neeb moved to repository
+* Sending string as resource decorator/serializer/repository is deprecated. Please send class defination.
+* Sending class_name to resource is deprecated. Please send class.
+* Added repositories
+
+
 == 0.5.2
 * BREAKING CHANGE: removed `collection` method in resource. please always use `read_all`
 * Added simple authorization helper

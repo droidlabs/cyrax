@@ -9,4 +9,3 @@
 == 0.8.0
 * Support assignments in serializer
 * Add resource authorization
-* Add resource response message translations support

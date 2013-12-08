@@ -3,24 +3,24 @@ module Cyrax::Extensions
     extend ActiveSupport::Concern
 
     included do
-      class_attribute :decorator_class_name
-    end
-
-    def decorator_class_name
-      options[:decorator] || self.class.decorator_class_name
+      class_attribute :_decorator_class
     end
 
     def decorable?
-      !decorator_class_name.nil?
+      !decorator_class.nil?
     end
 
     def decorator_class
-      decorator_class_name.to_s.classify.constantize
+      options[:decorator] || self.class._decorator_class
     end
 
     module ClassMethods
-      def decorator(name)
-        self.decorator_class_name = name ? name.to_s : nil
+      def decorator(klass)
+        if klass.is_a?(String)
+          ActiveSupport::Deprecation.warn "sending String in #decorator method is deprecated. send Class instead"
+          klass = klass.constantize
+        end
+        self._decorator_class = klass
       end
     end
   end

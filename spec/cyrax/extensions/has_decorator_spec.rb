@@ -20,26 +20,26 @@ module Cyrax
     subject { BaseWithDecorator.new }
 
     describe 'class attributes' do
-      its(:class) { should respond_to(:decorator_class_name) }
+      its(:class) { should respond_to(:_decorator_class) }
     end
 
     describe 'class methods' do
       describe '#decorator' do
-        before { subject.class.decorator(:foo) }
+        before { subject.class.decorator(Foo) }
 
-        its(:decorator_class_name) { should eq('foo') }
+        its(:decorator_class) { should eq(Foo) }
       end
     end
 
     describe 'instance methods' do
       describe '#decorator_class' do
-        before { subject.class.decorator(:foo) }
+        before { subject.class.decorator(Foo) }
         its(:decorator_class) { should eq(Foo) }
       end
 
       describe '#decorable?' do
         context 'when `decorator_class_name` present' do
-          before { subject.class.decorator(:foo) }
+          before { subject.class.decorator(Foo) }
           its(:decorable?) { should be_true }
         end
 

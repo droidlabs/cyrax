@@ -4,39 +4,26 @@ module Cyrax::Extensions
     extend ActiveSupport::Concern
 
     included do
-      class_attribute :resource_name
-      class_attribute :resource_class_name
-      class_attribute :collection_name
+      class_attribute :_resource_name
+      class_attribute :_collection_name
+      class_attribute :_resource_class
+    end
+
+    def resource_name
+      self.class._resource_name
+    end
+
+    def collection_name
+      self.class._collection_name
     end
 
     # Returns the resource class as a constant - e.g. Product
     def resource_class
-      if self.resource_class_name
-        self.resource_class_name.constantize
-      else
-        resource_name.classify.constantize
-      end
-    end
-
-    # Returns the resource class - e.g. Product
-    # If you want your resource to return something interesting, you should override this in your resource by defining the method and returning your own scope
-    #
-    # @example Overriding resource_scope
-    #   class Products::UserResource < Products::BaseResource
-    #     def resource_scope
-    #       accessor.products
-    #     end
-    #   end
-    def resource_scope
-      resource_class
+      self.class._resource_class || resource_name.classify.constantize
     end
 
     def resource_attributes
       filter_attributes(dirty_resource_attributes)
-    end
-
-    def response_name
-      resource_name
     end
 
     module ClassMethods
@@ -64,23 +51,27 @@ module Cyrax::Extensions
       # @param name [Symbol] The name of the resource
       # @param options Hash [Hash] Options
       def resource(name, options = {})
-        self.resource_name = name.to_s
-        self.resource_class_name = options[:class_name]
-        self.collection_name = name.to_s.pluralize
+        if options[:class_name].present?
+          ActiveSupport::Deprecation.warn "sending :class_name in #resource method is deprecated. send :class instead"
+          options[:class] = options[:class_name].to_s.constantize
+        end
+        self._resource_name = name.to_s
+        self._resource_class = options[:class]
+        self._collection_name = name.to_s.pluralize
       end
     end
 
     private
+      def response_name
+        resource_name
+      end
+
       def dirty_resource_attributes
         if Cyrax.strong_parameters
           params.require(resource_name)
         else
           params[resource_name] || {}
         end
-      end
-
-      def default_resource_attributes
-        {}
       end
 
       def filter_attributes(attributes)

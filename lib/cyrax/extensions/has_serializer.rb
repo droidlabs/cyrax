@@ -3,24 +3,24 @@ module Cyrax::Extensions
     extend ActiveSupport::Concern
 
     included do
-      class_attribute :serializer_class_name
-    end
-
-    def serializer_class_name
-      options[:serializer] || self.class.serializer_class_name
+      class_attribute :_serializer_class
     end
 
     def serializable?
-      !serializer_class_name.nil?
+      !serializer_class.nil?
     end
 
     def serializer_class
-      serializer_class_name.to_s.classify.constantize
+      options[:serializer] || self.class._serializer_class
     end
 
     module ClassMethods
-      def serializer(name)
-        self.serializer_class_name = name ? name.to_s : nil
+      def serializer(klass)
+        if klass.is_a?(String)
+          ActiveSupport::Deprecation.warn "sending String in #serializer method is deprecated. send Class instead"
+          klass = klass.constantize
+        end
+        self._serializer_class = klass
       end
     end
   end

@@ -18,16 +18,17 @@ module Cyrax
     subject { BaseWithResource.new }
 
     describe 'class attributes' do
-      its(:class) { should respond_to(:resource_name) }
-      its(:class) { should respond_to(:resource_class_name) }
+      its(:class) { should respond_to(:_resource_name) }
+      its(:class) { should respond_to(:_collection_name) }
+      its(:class) { should respond_to(:_resource_class) }
     end
 
     describe 'class methods' do
       describe '#resource' do
-        before { subject.class.resource(:foo, class_name:'bar', name:'bazz') }
+        before { subject.class.resource(:foo, class: Bar, name:'bazz') }
 
         its(:resource_name) { should eq('foo') }
-        its(:resource_class_name) { should eq('bar') }
+        its(:resource_class) { should eq(Bar) }
       end
     end
 
@@ -45,7 +46,7 @@ module Cyrax
 
       describe '#resource_class' do
         context 'when `class_name` option is supplied' do
-          before { subject.class.resource(:foo, class_name:'Bar') }
+          before { subject.class.resource(:foo, class: Bar) }
           its(:resource_class) { should eq(Bar) }
         end
 
@@ -53,11 +54,6 @@ module Cyrax
           before { subject.class.resource(:foo) }
           its(:resource_class) { should eq(Foo) }
         end
-      end
-
-      describe '#resource_scope' do
-        before { subject.stub(:resource_class).and_return(Foo) }
-        its(:resource_scope) { should eq(Foo) }
       end
 
       describe '#resource_attributes' do
@@ -86,11 +82,6 @@ module Cyrax
             subject.stub(:params).and_return({})
             subject.send(:dirty_resource_attributes).should eq({})
           end
-        end
-      end
-      describe '#default_resource_attributes' do
-        it 'should return empty hash by default' do
-          subject.send(:default_resource_attributes).should eq({})
         end
       end
 

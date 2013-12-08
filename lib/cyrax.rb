@@ -6,6 +6,7 @@ require "cyrax/extensions/has_response.rb"
 require "cyrax/extensions/has_service.rb"
 require "cyrax/extensions/has_decorator.rb"
 require "cyrax/extensions/has_serializer.rb"
+require "cyrax/extensions/has_repository.rb"
 require "cyrax/presenters/base_collection.rb"
 require "cyrax/presenters/decorated_collection.rb"
 require "cyrax/serializers/scope.rb"
@@ -17,6 +18,7 @@ require "cyrax/presenter.rb"
 require "cyrax/response.rb"
 require "cyrax/decorator.rb"
 require "cyrax/serializer.rb"
+require "cyrax/repository.rb"
 
 module Cyrax
   @@strong_parameters = true

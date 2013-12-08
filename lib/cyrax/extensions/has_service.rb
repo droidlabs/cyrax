@@ -6,11 +6,10 @@ module Cyrax::Extensions
     # @return [Cyrax::Response] response
     def read_all(&block)
       authorize_resource!(:read_all, resource_class)
-      collection = build_collection
+      collection = repository.find_all
       block.call(collection) if block_given?
       respond_with collection, name: collection_name, present: :collection
     end
-    # Overrides collection with read_all
     alias_method :read_all!, :read_all
 
     # Builds a new resource without saving to DB
@@ -18,7 +17,7 @@ module Cyrax::Extensions
     # Used for :new action in controller
     # @return [Cyrax::Response] response
     def build(&block)
-      resource = build_resource(nil)
+      resource = repository.build(nil)
       authorize_resource!(:build, resource)
       block.call(resource) if block_given?
       respond_with resource
@@ -29,10 +28,10 @@ module Cyrax::Extensions
     # Used for :create action in controller
     # @return [Cyrax::Response] response
     def create(custom_attributes = nil, &block)
-      resource = build_resource(nil, custom_attributes||resource_attributes)
+      resource = repository.build(nil, custom_attributes||resource_attributes)
       authorize_resource!(:create, resource)
       transaction do
-        if save_resource(resource)
+        if repository.save(resource)
           set_message(:created)
           block.call(resource) if block_given?
         end
@@ -45,7 +44,7 @@ module Cyrax::Extensions
     # Used for :show action in controller
     # @return [Cyrax::Response] response
     def read(&block)
-      resource = find_resource(resource_params_id)
+      resource = repository.find(resource_params_id)
       block.call(resource) if block_given?
       respond_with resource
     end
@@ -57,10 +56,10 @@ module Cyrax::Extensions
     # Used for :update action in controller
     # @return [Cyrax::Response] response
     def update(custom_attributes = nil, &block)
-      resource = build_resource(resource_params_id, custom_attributes||resource_attributes)
+      resource = repository.build(resource_params_id, custom_attributes||resource_attributes)
       authorize_resource!(:update, resource)
       transaction do
-        if save_resource(resource)
+        if repository.save(resource)
           set_message(:updated)
           block.call(resource) if block_given?
         end
@@ -73,49 +72,15 @@ module Cyrax::Extensions
     # Used for :destroy action in controller
     # @return [Cyrax::Response] response
     def destroy(&block)
-      resource = find_resource(resource_params_id)
+      resource = repository.find(resource_params_id)
       authorize_resource!(:destroy, resource)
       transaction do
-        delete_resource(resource)
+        repository.delete(resource)
         block.call(resource) if block_given?
       end
       respond_with(resource)
     end
     alias_method :destroy!, :destroy
-
-    # Finds and returns a single item from the DB
-    # @param id [int] ID of item
-    # @return [object] The object
-    def find_resource(id)
-      resource_scope.find(id)
-    end
-
-    # Instantiates the resource
-    # @param id [int] ID or nil if you want a new object
-    # @param attributes [hash] Attributes you want to add to the resource
-    # @return [object] The object
-    def build_resource(id, attributes = {})
-      if id.present?
-        resource = find_resource(id)
-        resource.attributes = attributes
-        resource
-      else
-        resource_scope.new(default_resource_attributes.merge(attributes))
-      end
-    end
-
-    # Saves a resource
-    # @param resource [object] The resource to save
-    def save_resource(resource)
-      resource.save
-    end
-
-    # Remove a resource
-    # Calls destroy method on resource
-    # @param resource [object] The resource to destroy
-    def delete_resource(resource)
-      resource.destroy
-    end
 
     # Authorize a resource
     # Should be called on each service method and should be implemented on each resource.
@@ -124,16 +89,6 @@ module Cyrax::Extensions
     # @param resource [object] The resource to authorize
     def authorize_resource!(action, resource)
       # raise AuthorizationError
-    end
-
-    # Returns a collection of the resource we are calling.
-    #
-    # If you want your resource to return something interesting, you should override the resource_scope method.
-    # Otherwise by default it will return the constantized model name and it will call .all on it during presentation.
-    #
-    # @return [type] The collection
-    def build_collection
-      resource_scope
     end
 
     def transaction(&block)
@@ -148,6 +103,23 @@ module Cyrax::Extensions
 
     def resource_params_id
       params[:id]
+    end
+
+    # DEPRECATED METHODS
+    def resource_scope
+      respository.scope
+    end
+    def build_collection
+      respository.find_all
+    end
+    def find_resource(id)
+      respository.find(id)
+    end
+    def save_resource(resource)
+      respository.save(resource)
+    end
+    def delete_resource(resource)
+      respository.delete(resource)
     end
   end
 end

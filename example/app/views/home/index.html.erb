@@ -7,4 +7,5 @@
       <td><%= number_to_currency(product.price) %></td>
     </tr>
   <% end %>
+  <%= paginate @products %>
 </table>
