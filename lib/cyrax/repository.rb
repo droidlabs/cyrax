@@ -56,7 +56,7 @@ class Cyrax::Repository
     if block = finder_blocks[:find_all]
       instance_exec(&block)
     else
-      scope.is_a?(ActiveRecord::Relation) ? scope.load : scope.all
+      defined?(ActiveRecord) && scope.is_a?(ActiveRecord::Relation) ? scope.load : scope.all
     end
   end
 
