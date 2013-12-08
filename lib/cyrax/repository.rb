@@ -105,4 +105,9 @@ class Cyrax::Repository
   def default_attributes!
     {}
   end
+
+  def method_missing(method, *args, &block)
+    return super unless finder?(method)
+    finder(method, *args)
+  end
 end

@@ -1,3 +1,7 @@
+== 0.6.1
+* Fix deprecations
+* Ability to use finder methods as method-missing
+
 == 0.6.0
 * BREAKING CHANGE: build_resource, build_collection, resource_scope, find_resource, save_resource, delete_resource, default_resource_attributes methods have neeb moved to repository
 * Sending string as resource decorator/serializer/repository is deprecated. Please send class defination.

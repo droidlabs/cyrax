@@ -108,23 +108,23 @@ module Cyrax::Extensions
     # DEPRECATED METHODS
     def resource_scope
       ActiveSupport::Deprecation.warn "#resource_scope inside Resource deprecated. Use repository.scope instead."
-      respository.scope
+      repository.scope
     end
     def build_collection
       ActiveSupport::Deprecation.warn "#build_collection inside Resource deprecated. Use repository.find_all instead."
-      respository.find_all
+      repository.find_all
     end
     def find_resource(id)
       ActiveSupport::Deprecation.warn "#find_resource inside Resource deprecated. Use repository.find instead."
-      respository.find(id)
+      repository.find(id)
     end
     def save_resource(resource)
       ActiveSupport::Deprecation.warn "#save_resource inside Resource deprecated. Use repository.save instead."
-      respository.save(resource)
+      repository.save(resource)
     end
     def delete_resource(resource)
       ActiveSupport::Deprecation.warn "#delete_resource inside Resource deprecated. Use repository.delete instead."
-      respository.delete(resource)
+      repository.delete(resource)
     end
   end
 end

@@ -39,7 +39,7 @@ module Cyrax::Extensions
           end
 
           self._repository_options ||= {}
-          self._repository_options[:finders] = {}
+          self._repository_options[:finders] ||= {}
           self._repository_options[:finders][finder_name || :scope] = block
         end
       end
