@@ -28,12 +28,14 @@ module Cyrax::Extensions
     # Used for :create action in controller
     # @return [Cyrax::Response] response
     def create(custom_attributes = nil, &block)
-      resource = repository.build(nil, custom_attributes||resource_attributes)
+      resource = repository.build(nil)
+      old_resource = resource.dup
+      set_resource_attributes(resource, custom_attributes||resource_attributes)
       authorize_resource!(:create, resource)
       transaction do
         if repository.save(resource)
           set_message(:created)
-          block.call(resource) if block_given?
+          block.call(resource, old_resource) if block_given?
         end
       end
       respond_with(resource)
@@ -56,12 +58,14 @@ module Cyrax::Extensions
     # Used for :update action in controller
     # @return [Cyrax::Response] response
     def update(custom_attributes = nil, &block)
-      resource = repository.build(resource_params_id, custom_attributes||resource_attributes)
+      resource = repository.build(resource_params_id)
+      old_resource = resource.dup
+      set_resource_attributes(resource, custom_attributes||resource_attributes)
       authorize_resource!(:update, resource)
       transaction do
         if repository.save(resource)
           set_message(:updated)
-          block.call(resource) if block_given?
+          block.call(resource, old_resource) if block_given?
         end
       end
       respond_with(resource)
@@ -105,26 +109,8 @@ module Cyrax::Extensions
       params[:id]
     end
 
-    # DEPRECATED METHODS
-    def resource_scope
-      ActiveSupport::Deprecation.warn "#resource_scope inside Resource deprecated. Use repository.scope instead."
-      repository.scope
-    end
-    def build_collection
-      ActiveSupport::Deprecation.warn "#build_collection inside Resource deprecated. Use repository.find_all instead."
-      repository.find_all
-    end
-    def find_resource(id)
-      ActiveSupport::Deprecation.warn "#find_resource inside Resource deprecated. Use repository.find instead."
-      repository.find(id)
-    end
-    def save_resource(resource)
-      ActiveSupport::Deprecation.warn "#save_resource inside Resource deprecated. Use repository.save instead."
-      repository.save(resource)
-    end
-    def delete_resource(resource)
-      ActiveSupport::Deprecation.warn "#delete_resource inside Resource deprecated. Use repository.delete instead."
-      repository.delete(resource)
+    def set_resource_attributes(resource, attributes = {})
+      resource.attributes = attributes
     end
   end
 end

@@ -19,6 +19,10 @@ module Cyrax::Extensions
     end
 
     module ClassMethods
+      def inherited(subclass)
+        subclass._repository_options = self._repository_options.try(:clone)
+      end
+
       def repository(name = nil, &block)
         if name.is_a?(Symbol)
           klass, finder_name = nil, name
@@ -33,11 +37,7 @@ module Cyrax::Extensions
           self._repository_class = klass
         end
         if block_given?
-          # temporary workaround. we should not use one object hash for parent and childrens
-          if self._repository_options.present?
-            self._repository_options = self._repository_options.dup
-          end
-
+          self._repository_options = self._repository_options.try(:clone)
           self._repository_options ||= {}
           self._repository_options[:finders] ||= {}
           self._repository_options[:finders][finder_name || :scope] = block

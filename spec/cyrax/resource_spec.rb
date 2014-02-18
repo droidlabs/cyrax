@@ -77,7 +77,8 @@ module Cyrax
       before { repository.stub(:build).and_return(resource) }
       it 'responds with resource' do
         repository.should_receive(:save).with(resource)
-        repository.should_receive(:build).with(nil, params)
+        repository.should_receive(:build).with(nil)
+        subject.should_receive(:set_resource_attributes).with(resource, params)
         subject.should_receive(:respond_with).with(resource)
         subject.create(params)
       end
@@ -105,8 +106,9 @@ module Cyrax
       let(:params) { {foo: 'bar'} }
       before { repository.stub(:build).and_return(resource) }
       it 'responds with resource' do
-        repository.should_receive(:build).with(123, params)
+        repository.should_receive(:build).with(123)
         repository.should_receive(:save).with(resource)
+        subject.should_receive(:set_resource_attributes).with(resource, params)
         subject.should_receive(:respond_with).with(resource)
         subject.update(params)
       end

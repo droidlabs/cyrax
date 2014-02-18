@@ -1,3 +1,8 @@
+== 0.7.0
+* update/create block callback will send old_resource as second parameter
+* Removed deprecated repository methods.
+* BREAKING CHANGE: service methods update/create will not send attributes to build, it will use set_resource_attributes.
+
 == 0.6.1
 * Fix deprecations
 * Ability to use finder methods as method-missing
