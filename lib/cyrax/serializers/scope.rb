@@ -5,12 +5,17 @@ module Cyrax::Serializers
       @dynamic_attrs = {}
       @relation_attrs = {}
       @namespace_attrs = {}
+      @assigned_attrs = {}
       @default_attributes = false
       instance_eval(&block) if block_given?
     end
 
     def namespace(name, &block)
       @namespace_attrs[name] = self.class.new(&block)
+    end
+
+    def assigned(name, &block)
+      @assigned_attrs[name] = self.class.new(&block)
     end
 
     def relation(attribute, &block)
@@ -20,6 +25,8 @@ module Cyrax::Serializers
         @attrs[attribute] = attribute
       end
     end
+    alias_method :has_many, :relation
+    alias_method :has_one, :relation
 
     def default_attributes
       @default_attributes = true
@@ -57,6 +64,10 @@ module Cyrax::Serializers
       end
       @relation_attrs.map do |attribute, scope|
         value = resource.send(attribute)
+        result[attribute] = scope.serialize(value)
+      end
+      @assigned_attrs.map do |attribute, scope|
+        value = options[:assignments][attribute]
         result[attribute] = scope.serialize(value)
       end
       @namespace_attrs.map do |attribute, scope|
