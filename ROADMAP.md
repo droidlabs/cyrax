@@ -1,3 +1,3 @@
 == 0.8.0
 * Add parameters filtering
-* Support assignments in serializer
+* Add oj/multi_json support to serializers

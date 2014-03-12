@@ -55,7 +55,7 @@ class Cyrax::Response
     if failure?
       {errors: @errors}
     elsif options[:serializer]
-      options[:serializer].new(result, as: accessor).serialize
+      options[:serializer].new(result, options).serialize
     else
       result.as_json
     end

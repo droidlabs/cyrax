@@ -13,6 +13,10 @@ class Cyrax::Serializer < Cyrax::Wrapper
       scope.namespace(name, &block)
     end
 
+    def assigned(name, &block)
+      scope.assigned(name, &block)
+    end
+
     def relation(name, &block)
       scope.relation(name, &block)
     end

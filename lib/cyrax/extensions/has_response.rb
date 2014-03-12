@@ -82,6 +82,7 @@ module Cyrax::Extensions
     # @param options [Hash] Options
     def respond_with(result, options = {})
       options[:as] ||= accessor
+      options[:assignments] =  @_assignments
       name = options[:name] || response_name
       result = result.result.to_model if result.is_a?(Cyrax::Response)
       if sync_errors_with?(result)

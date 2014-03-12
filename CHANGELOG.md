@@ -1,3 +1,6 @@
+== 0.7.1
+* Ability to serialize assigned resources.
+
 == 0.7.0
 * update/create block callback will send old_resource as second parameter
 * Removed deprecated repository methods.
