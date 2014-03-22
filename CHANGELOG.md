@@ -1,4 +1,10 @@
-== 0.7.1
+== 0.7.3, 0.5.5
+* Use multi json for json response.
+
+== 0.7.2, 0.5.4
+* Added total_count support to serializer.
+
+== 0.7.1, 0.5.3
 * Ability to serialize assigned resources.
 
 == 0.7.0

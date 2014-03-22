@@ -10,7 +10,7 @@ Add this line to your Gemfile.
 
 Rails 4:
 
-    gem 'cyrax', '~> 0.6.1'
+    gem 'cyrax', '~> 0.7.3'
 
 Rails 3:
 
