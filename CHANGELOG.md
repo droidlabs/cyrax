@@ -1,3 +1,6 @@
+== 0.7.4, 0.5.6
+* Send options to serializer attribute block.
+
 == 0.7.3, 0.5.5
 * Use multi json for json response.
 

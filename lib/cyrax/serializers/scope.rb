@@ -60,7 +60,7 @@ module Cyrax::Serializers
         result = resource.attributes rescue {}
       end
       @dynamic_attrs.map do |attribute, block|
-        result[attribute] = options[:serializer].instance_exec(resource, &block)
+        result[attribute] = options[:serializer].instance_exec(resource, options, &block)
       end
       @relation_attrs.map do |attribute, scope|
         value = resource.send(attribute)
