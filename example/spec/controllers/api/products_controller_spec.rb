@@ -26,8 +26,8 @@ describe Api::ProductsController do
       user_attrs = subject['user']
       user_attrs['email'].should == user.email
       user_attrs['name'].should == user.name
-      user_attrs.has_key?('created_at').should be_true
-      user_attrs.has_key?('updated_at').should be_false
+      user_attrs.has_key?('created_at').should be true
+      user_attrs.has_key?('updated_at').should be false
     end
   end
 

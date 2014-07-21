@@ -21,24 +21,24 @@ module Cyrax
     describe '#success?' do
       context 'when there are no errors' do
         before { subject.with_errors({}) }
-        its(:success?) { should be_true }
+        its(:success?) { should be true }
       end
 
       context 'when there are errors' do
         before { subject.with_errors({foo: 'some', bar: 'errors'}) }
-        its(:success?) { should be_false }
+        its(:success?) { should be false }
       end
     end
 
     describe '#failure?' do
       context 'when there are no errors' do
         before { subject.with_errors({}) }
-        its(:failure?) { should be_false }
+        its(:failure?) { should be false }
       end
 
       context 'when there are errors' do
         before { subject.with_errors(['some', 'errors']) }
-        its(:failure?) { should be_true }
+        its(:failure?) { should be true }
       end
     end
 
@@ -78,13 +78,13 @@ module Cyrax
     describe '#has_error?' do
       context 'when there are no errors' do
         before { subject.with_errors({}) }
-        specify { subject.has_error?(:foo).should be_false }
+        specify { subject.has_error?(:foo).should be false }
       end
 
       context 'when there are errors' do
         before { subject.with_errors({foo: 'some', bar: 'errors'}) }
-        specify { subject.has_error?(:foo).should be_true }
-        specify { subject.has_error?(:foo1).should be_false }
+        specify { subject.has_error?(:foo).should be true }
+        specify { subject.has_error?(:foo1).should be false }
       end
     end
 
