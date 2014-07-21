@@ -64,14 +64,14 @@ module Cyrax::Serializers
       end
       @relation_attrs.map do |attribute, scope|
         value = resource.send(attribute)
-        result[attribute] = scope.serialize(value)
+        result[attribute] = scope.serialize(value, options)
       end
       @assigned_attrs.map do |attribute, scope|
         value = options[:assignments][attribute]
-        result[attribute] = scope.serialize(value)
+        result[attribute] = scope.serialize(value, options)
       end
       @namespace_attrs.map do |attribute, scope|
-        result[attribute] = scope.serialize(resource)
+        result[attribute] = scope.serialize(resource, options)
       end
       @attrs.map do |attribute, options|
         result[attribute] = resource.send(attribute)
