@@ -21,6 +21,10 @@ class Cyrax::Decorator < Cyrax::Wrapper
     resource.send(method, *args, &block)
   end
 
+  def respond_to?(method_sym, include_private = false)
+    super || resource.respond_to?(method_sym, include_private)
+  end
+
   class << self
     alias_method :decorate, :new
 
