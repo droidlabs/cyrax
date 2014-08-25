@@ -62,7 +62,12 @@ class Cyrax::Response
   end
 
   def method_missing(method, *args, &block)
-    super unless assignments.has_key?(method)
-    assignments[method]
+    if method.to_s == resource_name
+      result
+    elsif assignments.has_key?(method)
+      assignments[method]
+    else
+      super
+    end
   end
 end
