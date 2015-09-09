@@ -47,7 +47,9 @@ module Cyrax::Serializers
     end
 
     def serialize(resource, options = {})
-      if resource.respond_to?(:to_a)
+      if resource.nil?
+        nil
+      elsif resource.respond_to?(:to_a)
         resource.to_a.map{ |r| serialize_one(r, options) }
       else
         serialize_one(resource, options)
