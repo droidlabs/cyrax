@@ -20,7 +20,7 @@ class Cyrax::Presenter < Cyrax::Wrapper
     if options[:present] == :collection
       Cyrax::Presenters::DecoratedCollection.new(resource, options)
     else
-      options[:decorator].decorate(resource)
+      options[:decorator].decorate(resource, options)
     end
   end
 
