@@ -20,5 +20,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "multi_json"
 
   spec.add_development_dependency "sqlite3"
-  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rspec", '~> 2.99.0'
 end
