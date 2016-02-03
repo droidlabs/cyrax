@@ -1,5 +1,6 @@
 module Cyrax::Extensions
   module HasService
+    VALIDATION_ERROR_STATUS = 422
     extend ActiveSupport::Concern
 
     # Builds and returns a collection response for Rails
@@ -35,6 +36,8 @@ module Cyrax::Extensions
         if save_resource(resource)
           set_message(:created)
           block.call(resource) if block_given?
+        else
+          set_status VALIDATION_ERROR_STATUS
         end
       end
       respond_with(resource)
@@ -63,6 +66,8 @@ module Cyrax::Extensions
         if save_resource(resource)
           set_message(:updated)
           block.call(resource) if block_given?
+        else
+          set_status VALIDATION_ERROR_STATUS
         end
       end
       respond_with(resource)

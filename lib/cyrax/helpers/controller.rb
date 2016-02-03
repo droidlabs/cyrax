@@ -27,7 +27,7 @@ module Cyrax::ControllerHelper
           super(result, options, &block)
         end
         format.json do
-          render json: MultiJson.dump(response.as_json)
+          render json: MultiJson.dump(response.as_json), status: options[:status] || 200
         end
       end
     else

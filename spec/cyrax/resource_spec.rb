@@ -103,6 +103,11 @@ module Cyrax
           subject.should_not_receive(:set_message).with(:created)
           subject.create(params)
         end
+
+        it "sets 422 status" do
+          subject.should_receive(:set_status).with(422)
+          subject.create(params)
+        end
       end
     end
 
@@ -129,7 +134,12 @@ module Cyrax
 
         it 'does not set message' do
           subject.should_not_receive(:set_message).with(:created)
-          subject.create(params)
+          subject.update(params)
+        end
+
+        it "sets 422 status" do
+          subject.should_receive(:set_status).with(422)
+          subject.update(params)
         end
       end
     end
