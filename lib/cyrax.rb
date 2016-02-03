@@ -20,6 +20,7 @@ require "cyrax/serializer.rb"
 
 module Cyrax
   @@strong_parameters = true
+  @@automatically_set_invalid_status = true
 
   def self.strong_parameters
     @@strong_parameters
@@ -27,5 +28,13 @@ module Cyrax
 
   def self.strong_parameters=(value)
     @@strong_parameters = value
+  end
+
+  def self.automatically_set_invalid_status
+    @@automatically_set_invalid_status
+  end
+
+  def self.automatically_set_invalid_status=(value)
+    @@automatically_set_invalid_status = value
   end
 end

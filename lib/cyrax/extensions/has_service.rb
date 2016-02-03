@@ -36,7 +36,7 @@ module Cyrax::Extensions
         if save_resource(resource)
           set_message(:created)
           block.call(resource) if block_given?
-        else
+        elsif Cyrax.automatically_set_invalid_status
           set_status VALIDATION_ERROR_STATUS
         end
       end
@@ -66,7 +66,7 @@ module Cyrax::Extensions
         if save_resource(resource)
           set_message(:updated)
           block.call(resource) if block_given?
-        else
+        elsif Cyrax.automatically_set_invalid_status
           set_status VALIDATION_ERROR_STATUS
         end
       end
