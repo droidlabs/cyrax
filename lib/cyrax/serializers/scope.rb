@@ -69,7 +69,8 @@ module Cyrax::Serializers
         result[attribute] = scope.serialize(value, options)
       end
       @assigned_attrs.map do |attribute, scope|
-        value = options[:assignments][attribute]
+        assignments = options[:assignments] || {}
+        value = assignments[attribute]
         result[attribute] = scope.serialize(value, options)
       end
       @namespace_attrs.map do |attribute, scope|
