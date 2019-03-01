@@ -2,7 +2,7 @@ require 'active_model'
 class Cyrax::Decorator < Cyrax::Wrapper
   include ActiveModel::Serialization
   include ActiveModel::Serializers::JSON
-  include ActiveModel::Serializers::Xml
+
 
   def to_model
     resource
