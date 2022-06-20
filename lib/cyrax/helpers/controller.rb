@@ -24,6 +24,7 @@ module Cyrax::ControllerHelper
             flash.now[:error] = options[:error] if options[:error].present?
           end
           set_resource_from(response)
+          super(result, options, &block)
         end
         format.json do
           render json: MultiJson.dump(response.as_json), status: options[:status] || 200
