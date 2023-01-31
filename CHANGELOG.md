@@ -1,3 +1,9 @@
+== 0.8.0
+* Replace deprecated before_filter to before_action for rails 5+ support
+
+== 0.7.9
+* Import active_model/serializers/xml since it's been move to external gem
+
 == 0.7.4, 0.5.6
 * Send options to serializer attribute block.
 
