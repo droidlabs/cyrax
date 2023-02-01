@@ -14,10 +14,10 @@ Gem::Specification.new do |spec|
   spec.files = Dir["lib/**/*"] + ["LICENSE.txt", "Rakefile", "README.md"]
   spec.test_files = Dir["spec/**/*"]
 
-  spec.add_dependency "activesupport"
-  spec.add_dependency "activemodel"
   spec.add_dependency "active_model_serializers"
   spec.add_dependency "activemodel-serializers-xml"
+  spec.add_dependency "activesupport", '~> 4.2'
+  spec.add_dependency "activemodel", '~> 4.2'
   spec.add_dependency "has_active_logger"
   spec.add_dependency "multi_json"
 

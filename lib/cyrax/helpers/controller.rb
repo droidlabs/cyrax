@@ -15,7 +15,7 @@ module Cyrax::ControllerHelper
       result = result.to_model if result.respond_to?(:to_model)
 
       respond_to do |format|
-        format.any do
+        format.html do
           # set flashes
           if response.success?
             flash[:notice] = options[:notice] if options[:notice].present?
@@ -28,6 +28,10 @@ module Cyrax::ControllerHelper
         end
         format.json do
           render json: MultiJson.dump(response.as_json), status: options[:status] || 200
+        end
+        format.any do
+          set_resource_from(response)
+          super(response, options, &block)
         end
       end
     else
