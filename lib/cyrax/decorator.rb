@@ -1,5 +1,5 @@
 require 'active_model'
-# require 'active_model/serializers/xml'
+require 'active_model/serializers/xml'
 
 class Cyrax::Decorator < Cyrax::Wrapper
   include ActiveModel::Serialization
