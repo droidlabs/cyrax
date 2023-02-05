@@ -1,4 +1,4 @@
-# Cyrax [![Build Status](https://travis-ci.org/droidlabs/cyrax.png)](https://travis-ci.org/droidlabs/cyrax) [![Code Climate](https://codeclimate.com/github/droidlabs/cyrax.png)](https://codeclimate.com/github/droidlabs/cyrax)
+# Cyrax [![Rspec](https://github.com/droidlabs/cyrax/workflows/Rspec/badge.svg)](https://github.com/droidlabs/cyrax/actions?query=workflow%3ARspec) [![Code Climate](https://codeclimate.com/github/droidlabs/cyrax.png)](https://codeclimate.com/github/droidlabs/cyrax)
 
 Cyrax is microframework to build layered architecture, one of the core concepts of Domain Driven Design
 
