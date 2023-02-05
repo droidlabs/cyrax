@@ -40,12 +40,12 @@ module Cyrax
       describe '#decorable?' do
         context 'when `decorator_class_name` present' do
           before { subject.class.decorator(:foo) }
-          its(:decorable?) { should be_true }
+          its(:decorable?) { should be(true) }
         end
 
         context 'when `decorator_class_name` empty' do
           before { subject.class.decorator(nil) }
-          its(:decorable?) { should be_false }
+          its(:decorable?) { should be(false) }
         end
       end
     end
