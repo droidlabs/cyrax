@@ -16,11 +16,11 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "active_model_serializers"
   spec.add_dependency "activemodel-serializers-xml"
-  spec.add_dependency "activesupport", '~> 4.2'
-  spec.add_dependency "activemodel", '~> 4.2'
+  spec.add_dependency "activesupport", '~> 5.0'
+  spec.add_dependency "activemodel", '~> 5.0'
   spec.add_dependency "has_active_logger"
   spec.add_dependency "multi_json"
 
-  spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "sqlite3", '~> 1.5.4'
   spec.add_development_dependency "rspec", '~> 2.99.0'
 end

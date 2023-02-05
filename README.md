@@ -1,6 +1,4 @@
-# Cyrax [![Build Status](https://travis-ci.org/droidlabs/cyrax.png)](https://travis-ci.org/droidlabs/cyrax) [![Code Climate](https://codeclimate.com/github/droidlabs/cyrax.png)](https://codeclimate.com/github/droidlabs/cyrax) [![Roadchange](http://roadchange.com/droidlabs/cyrax/badge.png)](http://roadchange.com/droidlabs/cyrax) 
-![Cyrax](http://images2.wikia.nocookie.net/__cb20121118042055/mk/images/thumb/4/44/CyraxMK9Render.png/322px-CyraxMK9Render.png)
-> Safeties disabled; combat mode engaged.
+# Cyrax [![Build Status](https://travis-ci.org/droidlabs/cyrax.png)](https://travis-ci.org/droidlabs/cyrax) [![Code Climate](https://codeclimate.com/github/droidlabs/cyrax.png)](https://codeclimate.com/github/droidlabs/cyrax)
 
 Cyrax is microframework to build layered architecture, one of the core concepts of Domain Driven Design
 
@@ -8,13 +6,13 @@ Cyrax is microframework to build layered architecture, one of the core concepts 
 
 Add this line to your Gemfile.
 
+Rails 5:
+
+    gem 'cyrax', '~> 0.9.0'
+
 Rails 4:
 
-    gem 'cyrax', '~> 0.4.0'
-
-Rails 3:
-
-    gem 'cyrax', '~> 0.3.8'
+    gem 'cyrax', '~> 0.5.0'
 
 ## Usage
 

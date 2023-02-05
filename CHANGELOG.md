@@ -1,6 +1,7 @@
 == 0.9.0
 * BREAKING CHANGE: "master" branch is replaced with 0.5 version branch
 * BREAKING CHANGE: Replace deprecated before_filter to before_action for rails 5+ support
+* BREAKING CHANGE: activesupport & activemodel dependency updated to > 5.0
 * Import active_model/serializers/xml since it's been move to external gem
 * Removed roadmap (it's not up-to-date)
 
