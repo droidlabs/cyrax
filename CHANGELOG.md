@@ -1,8 +1,8 @@
-== 0.5.15
+== 0.9.0
+* BREAKING CHANGE: "master" branch is replaced with 0.5 version branch
 * BREAKING CHANGE: Replace deprecated before_filter to before_action for rails 5+ support
-
-== 0.5.14
 * Import active_model/serializers/xml since it's been move to external gem
+* Removed roadmap (it's not up-to-date)
 
 == 0.5.2
 * BREAKING CHANGE: removed `collection` method in resource. please always use `read_all`
