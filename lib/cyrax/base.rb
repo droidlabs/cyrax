@@ -17,7 +17,8 @@ class Cyrax::Base
   #     Products::UserResource.new(as: current_user, params: params)
   def initialize(options = {})
     @accessor = options[:as]
-    @params = wrap_params(options[:params])
+    # Action Pack 5 do not allow to initialize ActionController::Parameters with nil
+    @params = wrap_params(options[:params] || {})
     @options = options
   end
 
