@@ -6,6 +6,10 @@ Cyrax is microframework to build layered architecture, one of the core concepts 
 
 Add this line to your Gemfile.
 
+Rails 6:
+
+    gem 'cyrax', '~> 0.10.0'
+
 Rails 5:
 
     gem 'cyrax', '~> 0.9.0'

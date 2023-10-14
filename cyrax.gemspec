@@ -16,8 +16,8 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "active_model_serializers"
   spec.add_dependency "activemodel-serializers-xml"
-  spec.add_dependency "activesupport", '~> 5.0'
-  spec.add_dependency "activemodel", '~> 5.0'
+  spec.add_dependency "activesupport", '~> 6.0'
+  spec.add_dependency "activemodel", '~> 6.0'
   spec.add_dependency "has_active_logger"
   spec.add_dependency "multi_json"
 
