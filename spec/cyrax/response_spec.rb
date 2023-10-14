@@ -78,13 +78,13 @@ module Cyrax
     describe '#has_error?' do
       context 'when there are no errors' do
         before { subject.with_errors({}) }
-        specify { subject.has_error?(:foo).should be(false) }
+        specify { expect(subject.has_error?(:foo)).to be(false) }
       end
 
       context 'when there are errors' do
         before { subject.with_errors({foo: 'some', bar: 'errors'}) }
-        specify { subject.has_error?(:foo).should be(true) }
-        specify { subject.has_error?(:foo1).should be(false) }
+        specify { expect(subject.has_error?(:foo)).to be(true) }
+        specify { expect(subject.has_error?(:foo1)).to be(false) }
       end
     end
 

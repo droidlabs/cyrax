@@ -4,3 +4,4 @@ if ENV['COVERAGE']
   SimpleCov.start
 end
 require 'cyrax'
+require 'rspec/its'

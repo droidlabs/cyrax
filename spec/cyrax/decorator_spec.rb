@@ -8,7 +8,7 @@ module Cyrax
     its(:resource) { should eq(decorable) }
 
     it 'should translate missing methods to decorable' do
-      subject.foo.should eq('bar')
+      expect(subject.foo).to eq('bar')
     end
 
     it 'should not translate missing methods' do

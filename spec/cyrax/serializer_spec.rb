@@ -31,11 +31,11 @@ module Cyrax
     subject { FooSerializer.new(serializable).serialize }
 
     it 'should serialize object' do
-      subject[:name].should eq('me')
-      subject[:some][:foo].should eq('2342')
-      subject[:another][:another_foo].should eq('1234')
-      subject[:empty_relation_one].should eq(nil)
-      subject[:empty_relation_many].should eq([])
+      expect(subject[:name]).to eq('me')
+      expect(subject[:some][:foo]).to eq('2342')
+      expect(subject[:another][:another_foo]).to eq('1234')
+      expect(subject[:empty_relation_one]).to eq(nil)
+      expect(subject[:empty_relation_many]).to eq([])
     end
   end
 end

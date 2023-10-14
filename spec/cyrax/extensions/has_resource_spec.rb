@@ -56,15 +56,15 @@ module Cyrax
       end
 
       describe '#resource_scope' do
-        before { subject.stub(:resource_class).and_return(Foo) }
+        before { allow(subject).to receive(:resource_class).and_return(Foo) }
         its(:resource_scope) { should eq(Foo) }
       end
 
       describe '#resource_attributes' do
         let(:dirty_resource_attributes) { double }
-        before { subject.stub(:dirty_resource_attributes).and_return(dirty_resource_attributes)}
+        before { allow(subject).to receive(:dirty_resource_attributes).and_return(dirty_resource_attributes)}
         it 'filters dirty attributes' do
-          subject.should_receive(:filter_attributes).with(dirty_resource_attributes)
+          expect(subject).to receive(:filter_attributes).with(dirty_resource_attributes)
           subject.resource_attributes
         end
       end
@@ -75,33 +75,33 @@ module Cyrax
       describe '#dirty_resource_attributes' do
         context 'when params are present' do
           it 'should return from params by resource_name' do
-            subject.stub(:resource_name).and_return(:foo)
-            subject.stub(:params).and_return({foo: {bar: 'bazz'}})
-            subject.send(:dirty_resource_attributes).should eq({bar: 'bazz'})
+            allow(subject).to receive(:resource_name).and_return(:foo)
+            allow(subject).to receive(:params).and_return({foo: {bar: 'bazz'}})
+            expect(subject.send(:dirty_resource_attributes)).to eq({bar: 'bazz'})
           end
         end
         context 'when there are no params' do
           it 'should return empty hash' do
-            subject.stub(:resource_name).and_return(:foo)
-            subject.stub(:params).and_return({})
-            subject.send(:dirty_resource_attributes).should eq({})
+            allow(subject).to receive(:resource_name).and_return(:foo)
+            allow(subject).to receive(:params).and_return({})
+            expect(subject.send(:dirty_resource_attributes)).to eq({})
           end
         end
       end
       describe '#default_resource_attributes' do
         it 'should return empty hash by default' do
-          subject.send(:default_resource_attributes).should eq({})
+          expect(subject.send(:default_resource_attributes)).to eq({})
         end
       end
 
       describe '#filter_attributes' do
         it 'should return supplied attributes by default' do
-          subject.send(:filter_attributes, {foo: 'bar'}).should eq({foo: 'bar'})
+          expect(subject.send(:filter_attributes, {foo: 'bar'})).to eq({foo: 'bar'})
         end
         it 'should return blank attributes by default for strong_paramters=true' do
           Cyrax.strong_parameters = true
           params =  StrongParameters.new(foo: 'bar')
-          subject.send(:filter_attributes, params).should eq({})
+          expect(subject.send(:filter_attributes, params)).to eq({})
         end
       end
     end

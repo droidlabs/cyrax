@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "has_active_logger"
   spec.add_dependency "multi_json"
 
-  spec.add_development_dependency "sqlite3", '~> 1.5.4'
-  spec.add_development_dependency "rspec", '~> 2.99.0'
+  spec.add_development_dependency "sqlite3", '~> 1.5'
+  spec.add_development_dependency "rspec", '~> 3.12'
+  spec.add_development_dependency "rspec-its", '~> 1.3'
 end

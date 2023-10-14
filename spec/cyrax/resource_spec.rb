@@ -28,84 +28,84 @@ module Cyrax
     let(:resource) { double.as_null_object }
     let(:collection) { [double] }
     before do
-      subject.stub(:params).and_return({id:123})
-      subject.stub(:find_resource).and_return(resource)
+      allow(subject).to receive(:params).and_return({id:123})
+      allow(subject).to receive(:find_resource).and_return(resource)
       subject.class.send :resource, :foo
     end
 
     describe '#read_all' do
       it 'responds with decorated collection' do
-        subject.should_receive(:build_collection).and_return(collection)
-        subject.should_receive(:respond_with).with(collection, name: 'foos', present: :collection)
+        expect(subject).to receive(:build_collection).and_return(collection)
+        expect(subject).to receive(:respond_with).with(collection, name: 'foos', present: :collection)
         subject.read_all
       end
     end
 
     describe '#build' do
       it 'responds with resource' do
-        subject.should_receive(:build_resource).with(nil).and_return(resource)
-        subject.should_receive(:respond_with).with(resource)
+        expect(subject).to receive(:build_resource).with(nil).and_return(resource)
+        expect(subject).to receive(:respond_with).with(resource)
         subject.build
       end
     end
 
     describe '#edit' do
       it 'responds with resource' do
-        subject.should_receive(:find_resource)
-        subject.should_receive(:respond_with).with(resource)
+        expect(subject).to receive(:find_resource)
+        expect(subject).to receive(:respond_with).with(resource)
         subject.edit
       end
     end
 
     describe '#read' do
       it 'responds with resource' do
-        subject.should_receive(:find_resource)
-        subject.should_receive(:respond_with).with(resource)
+        expect(subject).to receive(:find_resource)
+        expect(subject).to receive(:respond_with).with(resource)
         subject.read
       end
     end
 
     describe '#destroy' do
       it 'responds with resource' do
-        subject.should_receive(:find_resource)
-        subject.should_receive(:respond_with).with(resource)
+        expect(subject).to receive(:find_resource)
+        expect(subject).to receive(:respond_with).with(resource)
         subject.destroy
       end
 
       it 'destroys resource' do
-        resource.should_receive(:destroy)
+        expect(resource).to receive(:destroy)
         subject.destroy
       end
     end
 
     describe '#create' do
       let(:params) { {foo: 'bar'} }
-      before { subject.stub(:build_resource).and_return(resource) }
+      before { allow(subject).to receive(:build_resource).and_return(resource) }
       it 'responds with resource' do
-        subject.should_receive(:build_resource).with(nil, params)
-        subject.should_receive(:respond_with).with(resource)
+        expect(subject).to receive(:build_resource).with(nil, params)
+        expect(subject).to receive(:respond_with).with(resource)
         subject.create(params)
       end
 
       context 'when resource successfully saved' do
-        before { resource.stub(:save).and_return(true) }
+        before { allow(resource).to receive(:save).and_return(true) }
 
         it 'sets message' do
-          subject.should_receive(:set_message).with(:created)
+          expect(subject).to receive(:set_message).with(:created)
           subject.create(params)
         end
       end
 
       context 'when resource could not be saved' do
-        before { resource.stub(:save).and_return(false) }
+        before { allow(resource).to receive(:save).and_return(false) }
 
         it 'does not set message' do
-          subject.should_not_receive(:set_message).with(:created)
+          expect(subject).to_not receive(:set_message).with(:created)
           subject.create(params)
         end
 
         it "sets 422 status" do
-          subject.should_receive(:set_status).with(422)
+          expect(subject).to receive(:set_status).with(422)
           subject.create(params)
         end
       end
@@ -113,32 +113,32 @@ module Cyrax
 
     describe '#update' do
       let(:params) { {foo: 'bar'} }
-      before { subject.stub(:build_resource).and_return(resource) }
+      before { allow(subject).to receive(:build_resource).and_return(resource) }
       it 'responds with resource' do
-        subject.should_receive(:build_resource).with(123, params)
-        subject.should_receive(:respond_with).with(resource)
+        expect(subject).to receive(:build_resource).with(123, params)
+        expect(subject).to receive(:respond_with).with(resource)
         subject.update(params)
       end
 
       context 'when resource successfully saved' do
-        before { resource.stub(:save).and_return(true) }
+        before { allow(resource).to receive(:save).and_return(true) }
 
         it 'sets message' do
-          subject.should_receive(:set_message).with(:updated)
+          expect(subject).to receive(:set_message).with(:updated)
           subject.update(params)
         end
       end
 
       context 'when resource could not be saved' do
-        before { resource.stub(:save).and_return(false) }
+        before { allow(resource).to receive(:save).and_return(false) }
 
         it 'does not set message' do
-          subject.should_not_receive(:set_message).with(:created)
+          expect(subject).to_not receive(:set_message).with(:created)
           subject.update(params)
         end
 
         it "sets 422 status" do
-          subject.should_receive(:set_status).with(422)
+          expect(subject).to receive(:set_status).with(422)
           subject.update(params)
         end
       end
