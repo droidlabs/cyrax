@@ -1,3 +1,6 @@
+== 0.10.0
+* POTENTIAL BREAKING CHANGE: activesupport & activemodel dependency updated to > 6.0
+
 == 0.9.0
 * BREAKING CHANGE: "master" branch is replaced with 0.5 version branch
 * BREAKING CHANGE: Replace deprecated before_filter to before_action for rails 5+ support
